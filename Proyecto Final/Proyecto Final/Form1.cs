@@ -85,6 +85,7 @@ namespace Proyecto_Final
         Vector2 vel = new Vector2(0f, 0f);
         float rotateVelocity = 1f;
         float linearVelocity = 1f;
+        float rotacion = 0f;
         Vector2 s = new Vector2(0.5f, 0.4f);
 
         public Vector2 size
@@ -108,5 +109,6 @@ namespace Proyecto_Final
             }
             pos = new Vector2(-1, -1);
         }
+        public 
     }
 }
