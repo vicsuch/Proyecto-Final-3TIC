@@ -24,16 +24,16 @@ namespace Proyecto_Final
             InitializeComponent();
             
             map = mapPreset();
-            for(int i = 0; i<10;i++)
+            for(int i = 0; i<11;i++)
             {   
                 Console.WriteLine(map[i]);
             }
-            Car McQueen = new Car();
+
             McQueen.getInitialPos(map);
-           
 
         }
-
+        Car McQueen = new Car();
+        
 
         public static string[] mapPreset()//C:\Users\47701283\source\repos\Laberinto\Laberinto\mapas\primerMapa.txt
         {
@@ -76,18 +76,19 @@ namespace Proyecto_Final
         }
         private void Actualisador_Tick(object sender, EventArgs e)
         {
-           
+            CarShow.Location = new System.Drawing.Point(Convert.ToInt32(McQueen.pos.X * -100), Convert.ToInt32(McQueen.pos.Y * -100));
         }
     }
     public class Car
     {
-        Vector2 pos = new Vector2(0f, 0f);
+        public Vector2 pos = new Vector2(0f, 0f);
         Vector2 vel = new Vector2(0f, 0f);
         float rotateVelocity = 1f;
         float linearVelocity = 1f;
         float rotacion = 0f;
-        Vector2 s = new Vector2(0.5f, 0.4f);
+        private Vector2 s = new Vector2(0.5f, 0.4f);
 
+        
         public Vector2 size
         {
             get
@@ -109,6 +110,6 @@ namespace Proyecto_Final
             }
             pos = new Vector2(-1, -1);
         }
-        public 
+        
     }
 }
