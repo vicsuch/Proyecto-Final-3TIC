@@ -28,7 +28,9 @@ namespace Proyecto_Final
             {   
                 Console.WriteLine(map[i]);
             }
-
+            Car McQueen = new Car();
+            McQueen.getInitialPos(map);
+           
 
         }
 
@@ -91,6 +93,20 @@ namespace Proyecto_Final
             {
                 return s;
             }
+        }
+        public void getInitialPos(string[] map)
+        {
+            int x = 0;
+            int y;
+            for (y = 0 ; y < map.Length ; y++)
+            {
+                x = map[y].IndexOf('i');
+                if (x != -1)
+                {
+                    pos = new Vector2(x, y);
+                }
+            }
+            pos = new Vector2(-1, -1);
         }
     }
 }

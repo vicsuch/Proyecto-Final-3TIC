@@ -8,3 +8,16 @@ C:\Users\47701283\source\repos\Proyecto Final\Proyecto Final\obj\Debug\Proyecto 
 C:\Users\47701283\source\repos\Proyecto Final\Proyecto Final\obj\Debug\Proyecto Final.csproj.CoreCompileInputs.cache
 C:\Users\47701283\source\repos\Proyecto Final\Proyecto Final\obj\Debug\Proyecto Final.exe
 C:\Users\47701283\source\repos\Proyecto Final\Proyecto Final\obj\Debug\Proyecto Final.pdb
+C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\bin\Debug\Proyecto Final.exe.config
+C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\bin\Debug\Proyecto Final.exe
+C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\bin\Debug\Proyecto Final.pdb
+C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\obj\Debug\Proyecto Final.csprojAssemblyReference.cache
+C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\obj\Debug\Proyecto_Final.Form1.resources
+C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\obj\Debug\Proyecto_Final.Properties.Resources.resources
+C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\obj\Debug\Proyecto Final.csproj.GenerateResource.cache
+C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\obj\Debug\Proyecto Final.csproj.CoreCompileInputs.cache
+C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\obj\Debug\Proyecto Final.csproj.CopyComplete
+C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\obj\Debug\Proyecto Final.exe
+C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\obj\Debug\Proyecto Final.pdb
