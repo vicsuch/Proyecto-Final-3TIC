@@ -127,10 +127,11 @@ namespace Proyecto_Final
             pos = new Vector2(-1, -1);
         }
 
+        
         public bool colision(int [] posB)
         {
-            //pos += new Vector2(2f, 1f);
-            
+            pos += new Vector2(2f, 1f);
+            float ninety = Convert.ToSingle((180d / Math.PI) * 90d);
 
             Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, rotation);
             Vector2 p0 = Vector2.Transform(size, rotate) + pos;
@@ -144,15 +145,24 @@ namespace Proyecto_Final
             Vector2 b3 = new Vector2(posB[0] - 0.5f, posB[1] - 0.5f);
 
             //math-----------------------
-            double o = rotation - Math.Atan(b0.Y / b0.X);
-            Console.WriteLine(0);
+            return sideCheck(Vector2.Transform(size, rotate),b0) && sideCheck(Vector2.Transform(size, Quaternion.CreateFromYawPitchRoll(0f, 0f, rotation + ninety)), b0);
+            
+        }
+
+        public bool sideCheck(Vector2 blockPoint , Vector2 CarPoint)
+        {
+            double o = rotation - Math.Atan(blockPoint.Y - CarPoint.Y / blockPoint.X - CarPoint.X);
+
 
             // https://www.omnicalculator.com/math/right-triangle-side-angle#:~:text=If%20you%20have%20the%20hypotenuse,side%20adjacent%20to%20the%20angle.
 
+            //b = c * cos(α)
 
+            float b = Vector2.Distance(blockPoint, CarPoint) * Convert.ToSingle(Math.Cos(o));
+            Console.WriteLine(o + "  " + b);
             rotation += 0.1f;
 
-            return false;
+            return (b < s.X);
         }
         
     }
