@@ -19,6 +19,7 @@ namespace Proyecto_Final
     {
 
         string[] map;
+        public float bSize = 100f;
         public Form1()
         {
             InitializeComponent();
@@ -76,7 +77,22 @@ namespace Proyecto_Final
         }
         private void Actualisador_Tick(object sender, EventArgs e)
         {
-            CarShow.Location = new System.Drawing.Point(Convert.ToInt32(McQueen.pos.X * -100), Convert.ToInt32(McQueen.pos.Y * -100));
+            carShow();
+            Console.WriteLine("Has colided: " + McQueen.colision(new int[] {1,1}));
+        }
+        public void carShow()
+        {
+            Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, McQueen.rotation);
+            Vector2 p0 = Vector2.Transform(McQueen.size * bSize, rotate) + McQueen.pos;
+            Vector2 p1 = Vector2.Transform(McQueen.size * new Vector2(bSize,-bSize), rotate) + McQueen.pos;
+            Vector2 p2 = Vector2.Transform(McQueen.size * new Vector2(-bSize, bSize), rotate) + McQueen.pos;
+            Vector2 p3 = Vector2.Transform(McQueen.size * new Vector2(-bSize, -bSize), rotate) + McQueen.pos;
+
+
+            CarShow0.Location = new Point(Convert.ToInt32(p0.X), Convert.ToInt32(p0.Y));
+            CarShow1.Location = new Point(Convert.ToInt32(p1.X), Convert.ToInt32(p1.Y));
+            CarShow2.Location = new Point(Convert.ToInt32(p2.X), Convert.ToInt32(p2.Y));
+            CarShow3.Location = new Point(Convert.ToInt32(p3.X), Convert.ToInt32(p3.Y));
         }
     }
     public class Car
@@ -85,8 +101,8 @@ namespace Proyecto_Final
         Vector2 vel = new Vector2(0f, 0f);
         float rotateVelocity = 1f;
         float linearVelocity = 1f;
-        float rotacion = 0f;
-        private Vector2 s = new Vector2(0.5f, 0.4f);
+        public float rotation = 0f;
+        private Vector2 s = new Vector2(0.25f, 0.2f);
 
         
         public Vector2 size
@@ -109,6 +125,29 @@ namespace Proyecto_Final
                 }
             }
             pos = new Vector2(-1, -1);
+        }
+
+        public bool colision(int [] posB)
+        {
+            pos += new Vector2(2f, 1f);
+
+
+            Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, rotation);
+            Vector2 p0 = Vector2.Transform(size, rotate) + pos;
+            Vector2 p1 = Vector2.Transform(size * new Vector2(1f, -1f), rotate) + pos;
+            Vector2 p2 = Vector2.Transform(size * new Vector2(-1f, 1f), rotate) + pos;
+            Vector2 p3 = Vector2.Transform(size * new Vector2(-1f, -1f), rotate) + pos;
+
+            Vector2 b0 = new Vector2(posB[0] + 0.5f, posB[1] + 0.5f);
+            Vector2 b1 = new Vector2(posB[0] + 0.5f, posB[1] - 0.5f);
+            Vector2 b2 = new Vector2(posB[0] - 0.5f, posB[1] + 0.5f);
+            Vector2 b3 = new Vector2(posB[0] - 0.5f, posB[1] - 0.5f);
+
+            Vector2 l1 = p1 - p0;
+            
+            
+
+            return false;
         }
         
     }
