@@ -129,7 +129,7 @@ namespace Proyecto_Final
 
         public bool colision(int [] posB)
         {
-            pos += new Vector2(2f, 1f);
+            //pos += new Vector2(2f, 1f);
             
 
             Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, rotation);
@@ -143,17 +143,14 @@ namespace Proyecto_Final
             Vector2 b2 = new Vector2(posB[0] - 0.5f, posB[1] + 0.5f);
             Vector2 b3 = new Vector2(posB[0] - 0.5f, posB[1] - 0.5f);
 
-            Console.WriteLine(Math.Atan(b0.Y / b0.X));
+            //math-----------------------
+            double o = rotation - Math.Atan(b0.Y / b0.X);
+            Console.WriteLine(0);
 
-            if (Math.Atan(b0.Y / b0.X)> 1.5708f || Math.Atan(b0.Y / b0.X) < -1.5708f)
-            {
-                
-                return true;
-            }
+            // https://www.omnicalculator.com/math/right-triangle-side-angle#:~:text=If%20you%20have%20the%20hypotenuse,side%20adjacent%20to%20the%20angle.
 
-            
 
-            //rotation += 0.1f;
+            rotation += 0.1f;
 
             return false;
         }
