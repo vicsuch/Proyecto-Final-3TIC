@@ -143,9 +143,12 @@ namespace Proyecto_Final
             Vector2 b2 = new Vector2(posB[0] - 0.5f, posB[1] + 0.5f);
             Vector2 b3 = new Vector2(posB[0] - 0.5f, posB[1] - 0.5f);
 
-            Vector2 l1 = p1 - p0;
-            
-            
+            Vector2 l1 = (p0 - p3) + (b0 - b3);
+            //bool a = 
+
+
+
+
 
             return false;
         }
