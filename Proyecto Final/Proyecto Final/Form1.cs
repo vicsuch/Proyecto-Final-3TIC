@@ -78,7 +78,7 @@ namespace Proyecto_Final
         private void Actualisador_Tick(object sender, EventArgs e)
         {
             carShow();
-            Console.WriteLine("Has colided: " + McQueen.colision(new int[] {1,1}));
+            Console.WriteLine("Has colided: " + McQueen.colision(new int[] {200,100}) + McQueen.pos);
         }
         public void carShow()
         {
@@ -130,7 +130,7 @@ namespace Proyecto_Final
         public bool colision(int [] posB)
         {
             pos += new Vector2(2f, 1f);
-
+            
 
             Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, rotation);
             Vector2 p0 = Vector2.Transform(size, rotate) + pos;
@@ -143,12 +143,17 @@ namespace Proyecto_Final
             Vector2 b2 = new Vector2(posB[0] - 0.5f, posB[1] + 0.5f);
             Vector2 b3 = new Vector2(posB[0] - 0.5f, posB[1] - 0.5f);
 
-            Vector2 l1 = (p0 - p3) + (b0 - b3);
-            //bool a = 
+            Console.WriteLine(Math.Atan(b0.Y / b0.X));
 
+            if (Math.Atan(b0.Y / b0.X)> 1.5708f || Math.Atan(b0.Y / b0.X) < -1.5708f)
+            {
+                
+                return true;
+            }
 
+            
 
-
+            //rotation += 0.1f;
 
             return false;
         }
