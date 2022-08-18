@@ -78,7 +78,9 @@ namespace Proyecto_Final
         private void Actualisador_Tick(object sender, EventArgs e)
         {
             carShow();
-            Console.WriteLine("Has colided: " + McQueen.colision(new int[] {200,100}) + McQueen.pos);
+            bool u = McQueen.colision(new int[] { 200, 100 });
+            Console.WriteLine("Has colided: " + u + McQueen.pos);
+            if (u) { MessageBox.Show(".---.-.-.-" + u); }
         }
         public void carShow()
         {
@@ -93,6 +95,22 @@ namespace Proyecto_Final
             CarShow1.Location = new Point(Convert.ToInt32(p1.X), Convert.ToInt32(p1.Y));
             CarShow2.Location = new Point(Convert.ToInt32(p2.X), Convert.ToInt32(p2.Y));
             CarShow3.Location = new Point(Convert.ToInt32(p3.X), Convert.ToInt32(p3.Y));
+
+            
+            Vector2 b0 = new Vector2(200f + 0.5f * bSize, 100f + 0.5f * bSize);
+            Vector2 b1 = new Vector2(200f + 0.5f * bSize, 100f - 0.5f * bSize);
+            Vector2 b2 = new Vector2(200f - 0.5f * bSize, 100f + 0.5f * bSize);
+            Vector2 b3 = new Vector2(200f - 0.5f * bSize, 100f - 0.5f * bSize);
+
+            blockShow0.Location = new Point(Convert.ToInt32(b0.X), Convert.ToInt32(b0.Y));
+            blockShow1.Location = new Point(Convert.ToInt32(b1.X), Convert.ToInt32(b1.Y));
+            blockShow2.Location = new Point(Convert.ToInt32(b2.X), Convert.ToInt32(b2.Y));
+            blockShow3.Location = new Point(Convert.ToInt32(b3.X), Convert.ToInt32(b3.Y));
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
     public class Car
@@ -130,40 +148,45 @@ namespace Proyecto_Final
         
         public bool colision(int [] posB)
         {
-            pos += new Vector2(2f, 1f);
+            pos += new Vector2(3f, 1f);
             float ninety = Convert.ToSingle((180d / Math.PI) * 90d);
 
             Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, rotation);
-            Vector2 p0 = Vector2.Transform(size, rotate) + pos;
-            Vector2 p1 = Vector2.Transform(size * new Vector2(1f, -1f), rotate) + pos;
-            Vector2 p2 = Vector2.Transform(size * new Vector2(-1f, 1f), rotate) + pos;
-            Vector2 p3 = Vector2.Transform(size * new Vector2(-1f, -1f), rotate) + pos;
+            Quaternion opositeRotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, -2f * rotation);
 
-            Vector2 b0 = new Vector2(posB[0] + 0.5f, posB[1] + 0.5f);
-            Vector2 b1 = new Vector2(posB[0] + 0.5f, posB[1] - 0.5f);
-            Vector2 b2 = new Vector2(posB[0] - 0.5f, posB[1] + 0.5f);
-            Vector2 b3 = new Vector2(posB[0] - 0.5f, posB[1] - 0.5f);
+            Vector2 pos1 = Vector2.Transform(pos,opositeRotate);
+
+            Vector2 p0 = size + pos1;
+            Vector2 p1 = size * new Vector2(1f, -1f) + pos1;
+            Vector2 p2 = size * new Vector2(-1f, 1f) + pos1;
+            Vector2 p3 = size * new Vector2(-1f, -1f) + pos1;
+
+
+
+            Vector2 b0 = new Vector2(0.5f, 0.5f) + new Vector2(posB[0], posB[1]);
+            Vector2 b1 = new Vector2(0.5f,- 0.5f) + new Vector2(posB[0], posB[1]);
+            Vector2 b2 = new Vector2(- 0.5f, 0.5f) + new Vector2(posB[0], posB[1]);
+            Vector2 b3 = new Vector2(- 0.5f,- 0.5f) + new Vector2(posB[0], posB[1]);
+
+            b0 = Vector2.Transform(b0,opositeRotate);
+            b1 = Vector2.Transform(b1, opositeRotate);
+            b2 = Vector2.Transform(b2, opositeRotate);
+            b3 = Vector2.Transform(b3, opositeRotate);
 
             //math-----------------------
-            return sideCheck(Vector2.Transform(size, rotate),b0) && sideCheck(Vector2.Transform(size, Quaternion.CreateFromYawPitchRoll(0f, 0f, rotation + ninety)), b0);
-            
-        }
-
-        public bool sideCheck(Vector2 blockPoint , Vector2 CarPoint)
-        {
-            double o = rotation - Math.Atan(blockPoint.Y - CarPoint.Y / blockPoint.X - CarPoint.X);
-
-
             // https://www.omnicalculator.com/math/right-triangle-side-angle#:~:text=If%20you%20have%20the%20hypotenuse,side%20adjacent%20to%20the%20angle.
 
-            //b = c * cos(α)
+            //b = c * cos(α)        tan(β) = b / a     β: α = 90 - β
 
-            float b = Vector2.Distance(blockPoint, CarPoint) * Convert.ToSingle(Math.Cos(o));
-            Console.WriteLine(o + "  " + b);
-            rotation += 0.1f;
 
-            return (b < s.X);
+
+
+            return false;
+
+
         }
         
+
+
     }
 }
