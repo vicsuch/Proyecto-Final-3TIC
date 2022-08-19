@@ -151,10 +151,12 @@ namespace Proyecto_Final
             pos += new Vector2(3f, 1f);
             float ninety = Convert.ToSingle((180d / Math.PI) * 90d);
 
+
             Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, rotation);
-            Quaternion opositeRotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, -2f * rotation);
+            Quaternion opositeRotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, -1);
 
             Vector2 pos1 = Vector2.Transform(pos,opositeRotate);
+            Console.WriteLine(rotate + "  " + opositeRotate);
 
             Vector2 p0 = size + pos1;
             Vector2 p1 = size * new Vector2(1f, -1f) + pos1;
@@ -162,21 +164,37 @@ namespace Proyecto_Final
             Vector2 p3 = size * new Vector2(-1f, -1f) + pos1;
 
 
-
             Vector2 b0 = new Vector2(0.5f, 0.5f) + new Vector2(posB[0], posB[1]);
             Vector2 b1 = new Vector2(0.5f,- 0.5f) + new Vector2(posB[0], posB[1]);
             Vector2 b2 = new Vector2(- 0.5f, 0.5f) + new Vector2(posB[0], posB[1]);
             Vector2 b3 = new Vector2(- 0.5f,- 0.5f) + new Vector2(posB[0], posB[1]);
 
-            b0 = Vector2.Transform(b0,opositeRotate);
-            b1 = Vector2.Transform(b1, opositeRotate);
-            b2 = Vector2.Transform(b2, opositeRotate);
-            b3 = Vector2.Transform(b3, opositeRotate);
+            b0 = Vector2.Transform(b0, opositeRotate)-pos1;
+            b1 = Vector2.Transform(b1, opositeRotate)-pos1;
+            b2 = Vector2.Transform(b2, opositeRotate)-pos1;
+            b3 = Vector2.Transform(b3, opositeRotate)-pos1;
 
             //math-----------------------
             // https://www.omnicalculator.com/math/right-triangle-side-angle#:~:text=If%20you%20have%20the%20hypotenuse,side%20adjacent%20to%20the%20angle.
 
             //b = c * cos(α)        tan(β) = b / a     β: α = 90 - β
+
+            if (IsInside(size,b0) || IsInside(size, b1) || IsInside(size, b2) || IsInside(size, b3))
+            {
+                return true;
+            }
+
+            p0 = Vector2.Transform(size, rotate) + pos;
+            p1 = Vector2.Transform(size * new Vector2(1, -1), rotate) + pos;
+            p2 = Vector2.Transform(size * new Vector2(-1, 1), rotate) + pos;
+            p3 = Vector2.Transform(size * new Vector2(-1, -1), rotate) + pos;
+
+            Vector2 B = new Vector2(1,1);
+
+            if (IsInside(B, b0) || IsInside(B, b1) || IsInside(B, b2) || IsInside(B, b3))
+            {
+                return true;
+            }
 
 
 
@@ -184,6 +202,24 @@ namespace Proyecto_Final
             return false;
 
 
+        }
+
+        public bool IsInside(Vector2 space , Vector2 point)
+        {
+            if (point.X<=space.X)
+            {
+                if(point.Y<=space.Y)
+                {
+                    if(point.Y>=-space.Y)
+                    {
+                        if(point.Y>=-space.X)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
         
 
