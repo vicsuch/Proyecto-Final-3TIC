@@ -70,6 +70,7 @@
             this.CarShow1.Size = new System.Drawing.Size(10, 10);
             this.CarShow1.TabIndex = 1;
             this.CarShow1.TabStop = false;
+            this.CarShow1.Click += new System.EventHandler(this.CarShow1_Click);
             // 
             // CarShow2
             // 

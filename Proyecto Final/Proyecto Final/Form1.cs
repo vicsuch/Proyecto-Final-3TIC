@@ -77,38 +77,139 @@ namespace Proyecto_Final
         }
         private void Actualisador_Tick(object sender, EventArgs e)
         {
-            carShow();
-            bool u = McQueen.colision(new int[] { 200, 100 });
-            Console.WriteLine("Has colided: " + u + McQueen.pos);
+
+            bool u = carShow(new int[] { 10 , 5 });
+            //Console.WriteLine("Has colided: " + u + McQueen.pos);
             if (u) { MessageBox.Show(".---.-.-.-" + u); }
+            else { McQueen.pos += new Vector2(0.175f, 0.1f); }
+
         }
-        public void carShow()
+
+        public bool carShow(int[] posB)
         {
+            Vector2 scale = new Vector2(40f, 40f);
+
+
+            float ninety = Convert.ToSingle((180d / Math.PI) * 90d);
+            McQueen.rotation += 0.035f;
+
+            Vector2 blockPos = new Vector2(posB[0], posB[1]);
+
             Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, McQueen.rotation);
-            Vector2 p0 = Vector2.Transform(McQueen.size * bSize, rotate) + McQueen.pos;
-            Vector2 p1 = Vector2.Transform(McQueen.size * new Vector2(bSize,-bSize), rotate) + McQueen.pos;
-            Vector2 p2 = Vector2.Transform(McQueen.size * new Vector2(-bSize, bSize), rotate) + McQueen.pos;
-            Vector2 p3 = Vector2.Transform(McQueen.size * new Vector2(-bSize, -bSize), rotate) + McQueen.pos;
+            Quaternion opositeRotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, -McQueen.rotation);
+
+            Vector2 pos1 = Vector2.Transform(McQueen.pos, opositeRotate);
+            //Console.WriteLine(rotate + "  " + opositeRotate);
+
+            Vector2 p0 = McQueen.size; // + pos1;
+            Vector2 p1 = McQueen.size * new Vector2(1f, -1f); // + pos1;
+            Vector2 p2 = McQueen.size * new Vector2(-1f, 1f); // + pos1;
+            Vector2 p3 = McQueen.size * new Vector2(-1f, -1f); // + pos1;
 
 
-            CarShow0.Location = new Point(Convert.ToInt32(p0.X), Convert.ToInt32(p0.Y));
-            CarShow1.Location = new Point(Convert.ToInt32(p1.X), Convert.ToInt32(p1.Y));
-            CarShow2.Location = new Point(Convert.ToInt32(p2.X), Convert.ToInt32(p2.Y));
-            CarShow3.Location = new Point(Convert.ToInt32(p3.X), Convert.ToInt32(p3.Y));
+            Vector2 b0 = new Vector2(0.5f, 0.5f) + blockPos - McQueen.pos;
+            Vector2 b1 = new Vector2(0.5f, -0.5f) + blockPos - McQueen.pos;
+            Vector2 b2 = new Vector2(-0.5f, 0.5f) + blockPos - McQueen.pos;
+            Vector2 b3 = new Vector2(-0.5f, -0.5f) + blockPos - McQueen.pos;
 
             
-            Vector2 b0 = new Vector2(200f + 0.5f * bSize, 100f + 0.5f * bSize);
-            Vector2 b1 = new Vector2(200f + 0.5f * bSize, 100f - 0.5f * bSize);
-            Vector2 b2 = new Vector2(200f - 0.5f * bSize, 100f + 0.5f * bSize);
-            Vector2 b3 = new Vector2(200f - 0.5f * bSize, 100f - 0.5f * bSize);
 
-            blockShow0.Location = new Point(Convert.ToInt32(b0.X), Convert.ToInt32(b0.Y));
-            blockShow1.Location = new Point(Convert.ToInt32(b1.X), Convert.ToInt32(b1.Y));
-            blockShow2.Location = new Point(Convert.ToInt32(b2.X), Convert.ToInt32(b2.Y));
-            blockShow3.Location = new Point(Convert.ToInt32(b3.X), Convert.ToInt32(b3.Y));
+
+
+            //math-----------------------
+            // https://www.omnicalculator.com/math/right-triangle-side-angle#:~:text=If%20you%20have%20the%20hypotenuse,side%20adjacent%20to%20the%20angle.
+
+            //b = c * cos(α)        tan(β) = b / a     β: α = 90 - β
+
+
+
+            //p0 = Vector2.Transform(McQueen.size, rotate);// + McQueen.pos;
+            //p1 = Vector2.Transform(McQueen.size * new Vector2(1, -1), rotate);// + McQueen.pos;
+            //p2 = Vector2.Transform(McQueen.size * new Vector2(-1, 1), rotate);// + McQueen.pos;
+            //p3 = Vector2.Transform(McQueen.size * new Vector2(-1, -1), rotate);// + McQueen.pos;
+
+            b0 = Vector2.Transform(b0, opositeRotate);
+            b1 = Vector2.Transform(b1, opositeRotate);
+            b2 = Vector2.Transform(b2, opositeRotate);
+            b3 = Vector2.Transform(b3, opositeRotate);
+
+            if (IsInside(McQueen.size, b0) || IsInside(McQueen.size, b1) || IsInside(McQueen.size, b2) || IsInside(McQueen.size, b3))
+            {
+                return true;
+            }
+
+            p0 = Vector2.Transform(McQueen.size, rotate) - blockPos + McQueen.pos;
+            p1 = Vector2.Transform(McQueen.size * new Vector2(1, -1), rotate) - blockPos + McQueen.pos;
+            p2 = Vector2.Transform(McQueen.size * new Vector2(-1, 1), rotate) - blockPos + McQueen.pos;
+            p3 = Vector2.Transform(McQueen.size * new Vector2(-1, -1), rotate) - blockPos + McQueen.pos;
+
+            b0 = new Vector2(0.5f, 0.5f) + blockPos;// - McQueen.pos;
+            b1 = new Vector2(0.5f, -0.5f) + blockPos;// - McQueen.pos;
+            b2 = new Vector2(-0.5f, 0.5f) + blockPos;// - McQueen.pos;
+            b3 = new Vector2(-0.5f, -0.5f) + blockPos;// - McQueen.pos;
+
+            Vector2 bSpace = new Vector2(0.5f , 0.5f);
+
+            Console.WriteLine(p3 +""+ b3);
+
+            if (IsInside(bSpace, p0) || IsInside(bSpace, p1) || IsInside(bSpace, p2) || IsInside(bSpace, p3))
+            {
+                return true;
+            }
+
+            p0 = Vector2.Transform(McQueen.size, rotate) + McQueen.pos;
+            p1 = Vector2.Transform(McQueen.size * new Vector2(1, -1), rotate) + McQueen.pos;
+            p2 = Vector2.Transform(McQueen.size * new Vector2(-1, 1), rotate) + McQueen.pos;
+            p3 = Vector2.Transform(McQueen.size * new Vector2(-1, -1), rotate) + McQueen.pos;
+
+            b0 *= scale;
+            b1 *= scale;
+            b2 *= scale;
+            b3 *= scale;
+
+            p0 *= scale;
+            p1 *= scale;
+            p2 *= scale;
+            p3 *= scale;
+
+
+            CarShow0.Location = new Point(Convert.ToInt32(b0.X), Convert.ToInt32(b0.Y));
+            CarShow1.Location = new Point(Convert.ToInt32(b1.X), Convert.ToInt32(b1.Y));
+            CarShow2.Location = new Point(Convert.ToInt32(b2.X), Convert.ToInt32(b2.Y));
+            CarShow3.Location = new Point(Convert.ToInt32(b3.X), Convert.ToInt32(b3.Y));
+
+            blockShow0.Location = new Point(Convert.ToInt32(p0.X), Convert.ToInt32(p0.Y));
+            blockShow1.Location = new Point(Convert.ToInt32(p1.X), Convert.ToInt32(p1.Y));
+            blockShow2.Location = new Point(Convert.ToInt32(p2.X), Convert.ToInt32(p2.Y));
+            blockShow3.Location = new Point(Convert.ToInt32(p3.X), Convert.ToInt32(p3.Y));
+
+            return false;
+        }
+
+        public bool IsInside(Vector2 space, Vector2 point)
+        {
+            if (point.X <= space.X)
+            {
+                if (point.Y <= space.Y)
+                {
+                    if (point.Y >= -space.Y)
+                    {
+                        if (point.X >= -space.X)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CarShow1_Click(object sender, EventArgs e)
         {
 
         }
