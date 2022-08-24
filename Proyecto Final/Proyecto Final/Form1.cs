@@ -20,16 +20,17 @@ namespace Proyecto_Final
 
         string[] map;
         public float bSize = 100f;
+
         public Form1()
         {
             InitializeComponent();
             
             map = mapPreset();
-            for(int i = 0; i<11;i++)
+            for(int i = 0 ; i< map.Length ; i++)
             {   
                 Console.WriteLine(map[i]);
             }
-
+            
             McQueen.getInitialPos(map);
 
         }
@@ -241,6 +242,7 @@ namespace Proyecto_Final
                 if (x != -1)
                 {
                     pos = new Vector2(x, y);
+                    MessageBox.Show(""+pos);
                 }
             }
             pos = new Vector2(-1, -1);
