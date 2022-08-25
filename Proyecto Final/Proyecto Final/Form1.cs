@@ -79,20 +79,44 @@ namespace Proyecto_Final
         private void Actualisador_Tick(object sender, EventArgs e)
         {
 
-            bool u = carShow(new int[] { 10 , 5 });
+            bool u = carColide(new int[] { 10 , 5 });
             //Console.WriteLine("Has colided: " + u + McQueen.pos);
             if (u) { MessageBox.Show(".---.-.-.-" + u); }
-            else { McQueen.pos += new Vector2(0.175f, 0.1f); }
+            else { McQueen.pos += new Vector2(0.175f, 0.1f); McQueen.rotation += 0.035f; carShow(); }
 
         }
 
-        public bool carShow(int[] posB)
+        public void blockShow()
+        {
+            
+        }
+
+        public void carShow()
         {
             Vector2 scale = new Vector2(40f, 40f);
+            Vector2 midle = new Vector2(400,200f);
+
+            Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, McQueen.rotation);
+
+            Vector2 p0 = Vector2.Transform(McQueen.size * scale, rotate) + midle;
+            Vector2 p1 = Vector2.Transform(McQueen.size * new Vector2(1, -1) * scale, rotate) + midle;
+            Vector2 p2 = Vector2.Transform(McQueen.size * new Vector2(-1, 1) * scale, rotate) + midle;
+            Vector2 p3 = Vector2.Transform(McQueen.size * new Vector2(-1, -1) * scale, rotate) + midle;
+
+
+            CarShow0.Location = new Point(Convert.ToInt32(p0.X), Convert.ToInt32(p0.Y));
+            CarShow1.Location = new Point(Convert.ToInt32(p1.X), Convert.ToInt32(p1.Y));
+            CarShow2.Location = new Point(Convert.ToInt32(p2.X), Convert.ToInt32(p2.Y));
+            CarShow3.Location = new Point(Convert.ToInt32(p3.X), Convert.ToInt32(p3.Y));
+        }
+
+        public bool carColide(int[] posB)
+        {
+            
 
 
             float ninety = Convert.ToSingle((180d / Math.PI) * 90d);
-            McQueen.rotation += 0.035f;
+            
 
             Vector2 blockPos = new Vector2(posB[0], posB[1]);
 
@@ -158,31 +182,7 @@ namespace Proyecto_Final
                 return true;
             }
 
-            p0 = Vector2.Transform(McQueen.size, rotate) + McQueen.pos;
-            p1 = Vector2.Transform(McQueen.size * new Vector2(1, -1), rotate) + McQueen.pos;
-            p2 = Vector2.Transform(McQueen.size * new Vector2(-1, 1), rotate) + McQueen.pos;
-            p3 = Vector2.Transform(McQueen.size * new Vector2(-1, -1), rotate) + McQueen.pos;
 
-            b0 *= scale;
-            b1 *= scale;
-            b2 *= scale;
-            b3 *= scale;
-
-            p0 *= scale;
-            p1 *= scale;
-            p2 *= scale;
-            p3 *= scale;
-
-
-            CarShow0.Location = new Point(Convert.ToInt32(b0.X), Convert.ToInt32(b0.Y));
-            CarShow1.Location = new Point(Convert.ToInt32(b1.X), Convert.ToInt32(b1.Y));
-            CarShow2.Location = new Point(Convert.ToInt32(b2.X), Convert.ToInt32(b2.Y));
-            CarShow3.Location = new Point(Convert.ToInt32(b3.X), Convert.ToInt32(b3.Y));
-
-            blockShow0.Location = new Point(Convert.ToInt32(p0.X), Convert.ToInt32(p0.Y));
-            blockShow1.Location = new Point(Convert.ToInt32(p1.X), Convert.ToInt32(p1.Y));
-            blockShow2.Location = new Point(Convert.ToInt32(p2.X), Convert.ToInt32(p2.Y));
-            blockShow3.Location = new Point(Convert.ToInt32(p3.X), Convert.ToInt32(p3.Y));
 
             return false;
         }
