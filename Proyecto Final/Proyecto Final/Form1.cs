@@ -94,7 +94,7 @@ namespace Proyecto_Final
         public void carShow()
         {
             Vector2 scale = new Vector2(40f, 40f);
-            Vector2 midle = new Vector2(400,200f);
+            Vector2 midle = new Vector2(400, 200f);
 
             Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, McQueen.rotation);
 
@@ -108,6 +108,10 @@ namespace Proyecto_Final
             CarShow1.Location = new Point(Convert.ToInt32(p1.X), Convert.ToInt32(p1.Y));
             CarShow2.Location = new Point(Convert.ToInt32(p2.X), Convert.ToInt32(p2.Y));
             CarShow3.Location = new Point(Convert.ToInt32(p3.X), Convert.ToInt32(p3.Y));
+
+            blockShow0.Size = new Size(Convert.ToInt32(scale.X), Convert.ToInt32(scale.Y));
+
+            blockShow0.Location = new Point(Convert.ToInt32(midle.X - (2f *scale.X) + McQueen.pos.X % 1 * scale.X), Convert.ToInt32((McQueen.pos.X % 1) + midle.Y));
         }
 
         public bool carColide(int[] posB)
