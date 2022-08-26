@@ -86,7 +86,8 @@ namespace Proyecto_Final
             {
                 //McQueen.pos += new Vector2(0.175f, 0.1f);
                 //McQueen.rotation += 0.035f; 
-                carShow(); 
+                carShow();
+                //MessageBox.Show("" + McQueen.pos);
             }
 
         }
@@ -99,15 +100,14 @@ namespace Proyecto_Final
         public void carShow()
         {
             Vector2 scale = new Vector2(40f, 40f);
-            Vector2 midle = new Vector2(400, 200f);
-            Vector2 moveBlock = new Vector2(McQueen.pos.X % 1, McQueen.pos.Y % 1);
+           
 
             Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, McQueen.rotation);
 
-            Vector2 p0 = Vector2.Transform(McQueen.size * scale, rotate) + midle;
-            Vector2 p1 = Vector2.Transform(McQueen.size * new Vector2(1, -1) * scale, rotate) + midle;
-            Vector2 p2 = Vector2.Transform(McQueen.size * new Vector2(-1, 1) * scale, rotate) + midle;
-            Vector2 p3 = Vector2.Transform(McQueen.size * new Vector2(-1, -1) * scale, rotate) + midle;
+            Vector2 p0 = Vector2.Transform(McQueen.size * scale, rotate) + McQueen.pos;
+            Vector2 p1 = Vector2.Transform(McQueen.size * new Vector2(1, -1) * scale, rotate) + (McQueen.pos * scale);
+            Vector2 p2 = Vector2.Transform(McQueen.size * new Vector2(-1, 1) * scale, rotate) + (McQueen.pos * scale);
+            Vector2 p3 = Vector2.Transform(McQueen.size * new Vector2(-1, -1) * scale, rotate) + (McQueen.pos * scale);
 
 
             CarShow0.Location = new Point(Convert.ToInt32(p0.X), Convert.ToInt32(p0.Y));
@@ -115,9 +115,7 @@ namespace Proyecto_Final
             CarShow2.Location = new Point(Convert.ToInt32(p2.X), Convert.ToInt32(p2.Y));
             CarShow3.Location = new Point(Convert.ToInt32(p3.X), Convert.ToInt32(p3.Y));
 
-            blockShow0.Size = new Size(Convert.ToInt32(scale.X), Convert.ToInt32(scale.Y));
 
-            blockShow0.Location = new Point(Convert.ToInt32(moveBlock.X * scale.X + midle.X), Convert.ToInt32(moveBlock.Y * scale.Y + midle.Y));
         }
 
         public bool carColide(int[] posB)
