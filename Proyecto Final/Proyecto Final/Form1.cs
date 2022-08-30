@@ -76,15 +76,17 @@ namespace Proyecto_Final
 
             return new string[0];
         }
+
+
         private void Actualisador_Tick(object sender, EventArgs e)
         {
 
-            bool u = carColide(new int[] { 10, 5 });
+            bool u = carColide(new int[] { 9, 5 });
             //Console.WriteLine("Has colided: " + u + McQueen.pos);
             if (u) { MessageBox.Show(".---.-.-.-" + u); }
             else
             {
-                //McQueen.pos += new Vector2(0.175f, 0.1f);
+                McQueen.pos += new Vector2(0.175f, 0.1f);
                 //McQueen.rotation += 0.035f; 
                 carShow();
                 //MessageBox.Show("" + McQueen.pos);
@@ -104,7 +106,7 @@ namespace Proyecto_Final
 
             Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, McQueen.rotation);
 
-            Vector2 p0 = Vector2.Transform(McQueen.size * scale, rotate) + McQueen.pos;
+            Vector2 p0 = Vector2.Transform(McQueen.size * scale, rotate) + (McQueen.pos * scale);
             Vector2 p1 = Vector2.Transform(McQueen.size * new Vector2(1, -1) * scale, rotate) + (McQueen.pos * scale);
             Vector2 p2 = Vector2.Transform(McQueen.size * new Vector2(-1, 1) * scale, rotate) + (McQueen.pos * scale);
             Vector2 p3 = Vector2.Transform(McQueen.size * new Vector2(-1, -1) * scale, rotate) + (McQueen.pos * scale);
@@ -115,6 +117,28 @@ namespace Proyecto_Final
             CarShow2.Location = new Point(Convert.ToInt32(p2.X), Convert.ToInt32(p2.Y));
             CarShow3.Location = new Point(Convert.ToInt32(p3.X), Convert.ToInt32(p3.Y));
 
+            Vector2 reference = new Vector2 ( Convert.ToSingle(Math.Round(McQueen.pos.X)) , Convert.ToSingle(Math.Round(McQueen.pos.Y)) );
+
+            int[,] refInt = new int[,] {
+                { Convert.ToInt32(Math.Round(McQueen.pos.X)) + 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 0},
+                { Convert.ToInt32(Math.Round(McQueen.pos.X)) + 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 1},
+                { Convert.ToInt32(Math.Round(McQueen.pos.X)) + 0, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 1},
+                { Convert.ToInt32(Math.Round(McQueen.pos.X)) - 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 1},
+                { Convert.ToInt32(Math.Round(McQueen.pos.X)) - 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 0},
+                { Convert.ToInt32(Math.Round(McQueen.pos.X)) - 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) - 1},
+                { Convert.ToInt32(Math.Round(McQueen.pos.X)) - 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 0},
+                { Convert.ToInt32(Math.Round(McQueen.pos.X)) - 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 1},
+            };
+
+            blockShow0.Visible = (map[refInt[0, 0]][refInt[0, 1]] == '█');
+            blockShow1.Visible = (map[refInt[1, 0]][refInt[1, 1]] == '█');
+            blockShow2.Visible = (map[refInt[2, 0]][refInt[2, 1]] == '█');
+            blockShow3.Visible = (map[refInt[3, 0]][refInt[3, 1]] == '█');
+            blockShow4.Visible = (map[refInt[4, 0]][refInt[4, 1]] == '█');
+            //Console.WriteLine(refInt[5, 0] + "  " + refInt[5, 1]);
+            blockShow5.Visible = (map[refInt[5, 0]][refInt[5, 1]] == '█');
+            blockShow6.Visible = (map[refInt[6, 0]][refInt[6, 1]] == '█');
+            blockShow7.Visible = (map[refInt[7, 0]][refInt[7, 1]] == '█');
 
         }
 
