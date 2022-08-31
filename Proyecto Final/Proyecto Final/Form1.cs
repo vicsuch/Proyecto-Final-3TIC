@@ -32,7 +32,8 @@ namespace Proyecto_Final
             }
 
             McQueen.getInitialPos(map);
-
+            MessageBox.Show("" + McQueen.pos);
+            actualisador.Enabled = true;
         }
         Car McQueen = new Car();
 
@@ -81,7 +82,7 @@ namespace Proyecto_Final
         private void Actualisador_Tick(object sender, EventArgs e)
         {
 
-            bool u = carColide(new int[] { 9, 5 });
+            bool u = carColide(new int[] { -9, 5 });
             //Console.WriteLine("Has colided: " + u + McQueen.pos);
             if (u) { MessageBox.Show(".---.-.-.-" + u); }
             else
@@ -130,15 +131,38 @@ namespace Proyecto_Final
                 { Convert.ToInt32(Math.Round(McQueen.pos.X)) - 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 1},
             };
 
+            Console.WriteLine("POSISION  " + refInt[2,0] + "  " + McQueen.pos);
             blockShow0.Visible = (map[refInt[0, 0]][refInt[0, 1]] == '█');
             blockShow1.Visible = (map[refInt[1, 0]][refInt[1, 1]] == '█');
             blockShow2.Visible = (map[refInt[2, 0]][refInt[2, 1]] == '█');
             blockShow3.Visible = (map[refInt[3, 0]][refInt[3, 1]] == '█');
             blockShow4.Visible = (map[refInt[4, 0]][refInt[4, 1]] == '█');
-            //Console.WriteLine(refInt[5, 0] + "  " + refInt[5, 1]);
             blockShow5.Visible = (map[refInt[5, 0]][refInt[5, 1]] == '█');
             blockShow6.Visible = (map[refInt[6, 0]][refInt[6, 1]] == '█');
             blockShow7.Visible = (map[refInt[7, 0]][refInt[7, 1]] == '█');
+
+            int[] scale2 = { Convert.ToInt32(scale.X), Convert.ToInt32(scale.Y) };
+
+            blockShow0.Location = new Point(refInt[0, 0] * scale2[0], refInt[0, 1] * scale2[1]);
+            blockShow1.Location = new Point(refInt[1, 0] * scale2[0], refInt[1, 1] * scale2[1]);
+            blockShow2.Location = new Point(refInt[2, 0] * scale2[0], refInt[2, 1] * scale2[1]);
+            blockShow3.Location = new Point(refInt[3, 0] * scale2[0], refInt[3, 1] * scale2[1]);
+            blockShow4.Location = new Point(refInt[4, 0] * scale2[0], refInt[4, 1] * scale2[1]);
+            blockShow5.Location = new Point(refInt[5, 0] * scale2[0], refInt[5, 1] * scale2[1]);
+            blockShow6.Location = new Point(refInt[6, 0] * scale2[0], refInt[6, 1] * scale2[1]);
+            blockShow7.Location = new Point(refInt[7, 0] * scale2[0], refInt[7, 1] * scale2[1]);
+
+            Console.WriteLine("  " + blockShow0.Location);
+
+            blockShow0.Size = new Size(scale2[0], scale2[1]);
+            blockShow1.Size = new Size(scale2[0], scale2[1]);
+            blockShow2.Size = new Size(scale2[0], scale2[1]);
+            blockShow3.Size = new Size(scale2[0], scale2[1]);
+            blockShow4.Size = new Size(scale2[0], scale2[1]);
+            blockShow5.Size = new Size(scale2[0], scale2[1]);
+            blockShow6.Size = new Size(scale2[0], scale2[1]);
+            blockShow7.Size = new Size(scale2[0], scale2[1]);
+
 
         }
 
@@ -275,6 +299,7 @@ namespace Proyecto_Final
                 {
                     pos = new Vector2(x, y);
                     MessageBox.Show(""+pos);
+                    return;
                 }
             }
             pos = new Vector2(-1, -1);

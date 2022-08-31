@@ -58,7 +58,6 @@
             // 
             // actualisador
             // 
-            this.actualisador.Enabled = true;
             this.actualisador.Tick += new System.EventHandler(this.Actualisador_Tick);
             // 
             // CarShow0
