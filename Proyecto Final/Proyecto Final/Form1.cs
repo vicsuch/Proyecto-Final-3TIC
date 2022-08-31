@@ -17,7 +17,7 @@ namespace Proyecto_Final
 
     public partial class Form1 : Form
     {
-
+        Vector2 scale = new Vector2(40f, 40f);
         string[] map;
         public float bSize = 100f;
 
@@ -31,8 +31,9 @@ namespace Proyecto_Final
                 Console.WriteLine(map[i]);
             }
 
-            McQueen.getInitialPos(map);
-            MessageBox.Show("" + McQueen.pos);
+            McQueen.McQueen(map);
+            //MessageBox.Show("" + McQueen.pos);
+            blockShow();
             actualisador.Enabled = true;
         }
         Car McQueen = new Car();
@@ -82,27 +83,36 @@ namespace Proyecto_Final
         private void Actualisador_Tick(object sender, EventArgs e)
         {
 
-            bool u = carColide(new int[] { -9, 5 });
-            //Console.WriteLine("Has colided: " + u + McQueen.pos);
-            if (u) { MessageBox.Show(".---.-.-.-" + u); }
-            else
-            {
-                McQueen.pos += new Vector2(0.175f, 0.1f);
-                //McQueen.rotation += 0.035f; 
-                carShow();
-                //MessageBox.Show("" + McQueen.pos);
-            }
+            carShow();
+            McQueen.update();
 
         }
 
         public void blockShow()
         {
+            for (int i = 0; i < map.Length; i++)
+            {
+                for(int j = 0 ; j < map[i].Length; j++)
+                {
+                    if(map[i][j] == '█')
+                    {
+                        PictureBox pic = new PictureBox();
+                        pic.Location = new Point(Convert.ToInt32(scale.X) * j, Convert.ToInt32(scale.Y) * i);
+                        pic.BackColor = Color.Black;
+                        pic.Name = "pic" + i + "--" + j;
+                        pic.Size = new Size(Convert.ToInt32(scale.X), Convert.ToInt32(scale.Y));
 
+                        this.Controls.Add(pic);
+                    }
+                }
+            }
         }
+
+
 
         public void carShow()
         {
-            Vector2 scale = new Vector2(40f, 40f);
+            
            
 
             Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, McQueen.rotation);
@@ -118,7 +128,7 @@ namespace Proyecto_Final
             CarShow2.Location = new Point(Convert.ToInt32(p2.X), Convert.ToInt32(p2.Y));
             CarShow3.Location = new Point(Convert.ToInt32(p3.X), Convert.ToInt32(p3.Y));
 
-            Vector2 reference = new Vector2 ( Convert.ToSingle(Math.Round(McQueen.pos.X)) , Convert.ToSingle(Math.Round(McQueen.pos.Y)) );
+            
 
             int[,] refInt = new int[,] {
                 { Convert.ToInt32(Math.Round(McQueen.pos.X)) + 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 0},
@@ -131,37 +141,7 @@ namespace Proyecto_Final
                 { Convert.ToInt32(Math.Round(McQueen.pos.X)) - 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 1},
             };
 
-            Console.WriteLine("POSISION  " + refInt[2,0] + "  " + McQueen.pos);
-            blockShow0.Visible = (map[refInt[0, 0]][refInt[0, 1]] == '█');
-            blockShow1.Visible = (map[refInt[1, 0]][refInt[1, 1]] == '█');
-            blockShow2.Visible = (map[refInt[2, 0]][refInt[2, 1]] == '█');
-            blockShow3.Visible = (map[refInt[3, 0]][refInt[3, 1]] == '█');
-            blockShow4.Visible = (map[refInt[4, 0]][refInt[4, 1]] == '█');
-            blockShow5.Visible = (map[refInt[5, 0]][refInt[5, 1]] == '█');
-            blockShow6.Visible = (map[refInt[6, 0]][refInt[6, 1]] == '█');
-            blockShow7.Visible = (map[refInt[7, 0]][refInt[7, 1]] == '█');
-
-            int[] scale2 = { Convert.ToInt32(scale.X), Convert.ToInt32(scale.Y) };
-
-            blockShow0.Location = new Point(refInt[0, 0] * scale2[0], refInt[0, 1] * scale2[1]);
-            blockShow1.Location = new Point(refInt[1, 0] * scale2[0], refInt[1, 1] * scale2[1]);
-            blockShow2.Location = new Point(refInt[2, 0] * scale2[0], refInt[2, 1] * scale2[1]);
-            blockShow3.Location = new Point(refInt[3, 0] * scale2[0], refInt[3, 1] * scale2[1]);
-            blockShow4.Location = new Point(refInt[4, 0] * scale2[0], refInt[4, 1] * scale2[1]);
-            blockShow5.Location = new Point(refInt[5, 0] * scale2[0], refInt[5, 1] * scale2[1]);
-            blockShow6.Location = new Point(refInt[6, 0] * scale2[0], refInt[6, 1] * scale2[1]);
-            blockShow7.Location = new Point(refInt[7, 0] * scale2[0], refInt[7, 1] * scale2[1]);
-
-            Console.WriteLine("  " + blockShow0.Location);
-
-            blockShow0.Size = new Size(scale2[0], scale2[1]);
-            blockShow1.Size = new Size(scale2[0], scale2[1]);
-            blockShow2.Size = new Size(scale2[0], scale2[1]);
-            blockShow3.Size = new Size(scale2[0], scale2[1]);
-            blockShow4.Size = new Size(scale2[0], scale2[1]);
-            blockShow5.Size = new Size(scale2[0], scale2[1]);
-            blockShow6.Size = new Size(scale2[0], scale2[1]);
-            blockShow7.Size = new Size(scale2[0], scale2[1]);
+            
 
 
         }
@@ -273,11 +253,13 @@ namespace Proyecto_Final
     }
     public class Car
     {
+        
+
         public Vector2 pos = new Vector2(0f, 0f);
-        Vector2 vel = new Vector2(0f, 0f);
-        float rotateVelocity = 1f;
-        float linearVelocity = 1f;
-        public float rotation = 0f;
+        Vector2 vel = new Vector2(0.4f, 0f);
+        float rotateVelocity = 0.3f; //in radians per update
+        
+        public float rotation = 0f; //in radians
         private Vector2 s = new Vector2(0.25f, 0.2f);
 
         
@@ -288,8 +270,10 @@ namespace Proyecto_Final
                 return s;
             }
         }
-        public void getInitialPos(string[] map)
+        public void McQueen(string[] map)
         {
+
+
             int x = 0;
             int y;
             for (y = 0 ; y < map.Length ; y++)
@@ -305,57 +289,97 @@ namespace Proyecto_Final
             pos = new Vector2(-1, -1);
         }
 
+        public void update()
+        {
+
+            float ninety = Convert.ToSingle((180d / Math.PI) * 90d);
+
+            rotation += rotateVelocity;
+
+            Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, rotation);
+
+            Quaternion rotate2 = Quaternion.CreateFromYawPitchRoll(0f, 0f, rotation + ninety);
+
+            float dotProduct = Vector2.Dot(vel, Vector2.Transform(new Vector2(1, 0), rotate));
+
+            float dotProduct2 = Vector2.Dot(vel, Vector2.Transform(new Vector2(1, 0), rotate2));
+
+            Console.WriteLine("" + dotProduct + " - " + dotProduct2);
+
+            vel = Vector2.Transform(new Vector2(dotProduct, dotProduct2 * 1f), rotate);
+
+            pos += vel;
+
+        }
         
         public bool colision(int [] posB)
         {
-            pos += new Vector2(3f, 1f);
             float ninety = Convert.ToSingle((180d / Math.PI) * 90d);
 
 
+            Vector2 blockPos = new Vector2(posB[0], posB[1]);
+
             Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, rotation);
-            Quaternion opositeRotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, -1);
+            Quaternion opositeRotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, -rotation);
 
-            Vector2 pos1 = Vector2.Transform(pos,opositeRotate);
-            Console.WriteLine(rotate + "  " + opositeRotate);
+            Vector2 pos1 = Vector2.Transform(pos, opositeRotate);
+            //Console.WriteLine(rotate + "  " + opositeRotate);
 
-            Vector2 p0 = size + pos1;
-            Vector2 p1 = size * new Vector2(1f, -1f) + pos1;
-            Vector2 p2 = size * new Vector2(-1f, 1f) + pos1;
-            Vector2 p3 = size * new Vector2(-1f, -1f) + pos1;
+            Vector2 p0 = size; // + pos1;
+            Vector2 p1 = size * new Vector2(1f, -1f); // + pos1;
+            Vector2 p2 = size * new Vector2(-1f, 1f); // + pos1;
+            Vector2 p3 = size * new Vector2(-1f, -1f); // + pos1;
 
 
-            Vector2 b0 = new Vector2(0.5f, 0.5f) + new Vector2(posB[0], posB[1]);
-            Vector2 b1 = new Vector2(0.5f,- 0.5f) + new Vector2(posB[0], posB[1]);
-            Vector2 b2 = new Vector2(- 0.5f, 0.5f) + new Vector2(posB[0], posB[1]);
-            Vector2 b3 = new Vector2(- 0.5f,- 0.5f) + new Vector2(posB[0], posB[1]);
+            Vector2 b0 = new Vector2(0.5f, 0.5f) + blockPos - pos;
+            Vector2 b1 = new Vector2(0.5f, -0.5f) + blockPos - pos;
+            Vector2 b2 = new Vector2(-0.5f, 0.5f) + blockPos - pos;
+            Vector2 b3 = new Vector2(-0.5f, -0.5f) + blockPos - pos;
 
-            b0 = Vector2.Transform(b0, opositeRotate)-pos1;
-            b1 = Vector2.Transform(b1, opositeRotate)-pos1;
-            b2 = Vector2.Transform(b2, opositeRotate)-pos1;
-            b3 = Vector2.Transform(b3, opositeRotate)-pos1;
+
+
+
 
             //math-----------------------
             // https://www.omnicalculator.com/math/right-triangle-side-angle#:~:text=If%20you%20have%20the%20hypotenuse,side%20adjacent%20to%20the%20angle.
 
             //b = c * cos(α)        tan(β) = b / a     β: α = 90 - β
 
-            if (IsInside(size,b0) || IsInside(size, b1) || IsInside(size, b2) || IsInside(size, b3))
+
+
+            //p0 = Vector2.Transform(McQueen.size, rotate);// + McQueen.pos;
+            //p1 = Vector2.Transform(McQueen.size * new Vector2(1, -1), rotate);// + McQueen.pos;
+            //p2 = Vector2.Transform(McQueen.size * new Vector2(-1, 1), rotate);// + McQueen.pos;
+            //p3 = Vector2.Transform(McQueen.size * new Vector2(-1, -1), rotate);// + McQueen.pos;
+
+            b0 = Vector2.Transform(b0, opositeRotate);
+            b1 = Vector2.Transform(b1, opositeRotate);
+            b2 = Vector2.Transform(b2, opositeRotate);
+            b3 = Vector2.Transform(b3, opositeRotate);
+
+            if (IsInside(size, b0) || IsInside(size, b1) || IsInside(size, b2) || IsInside(size, b3))
             {
                 return true;
             }
 
-            p0 = Vector2.Transform(size, rotate) + pos;
-            p1 = Vector2.Transform(size * new Vector2(1, -1), rotate) + pos;
-            p2 = Vector2.Transform(size * new Vector2(-1, 1), rotate) + pos;
-            p3 = Vector2.Transform(size * new Vector2(-1, -1), rotate) + pos;
+            p0 = Vector2.Transform(size, rotate) - blockPos + pos;
+            p1 = Vector2.Transform(size * new Vector2(1, -1), rotate) - blockPos + pos;
+            p2 = Vector2.Transform(size * new Vector2(-1, 1), rotate) - blockPos + pos;
+            p3 = Vector2.Transform(size * new Vector2(-1, -1), rotate) - blockPos + pos;
 
-            Vector2 B = new Vector2(1,1);
+            b0 = new Vector2(0.5f, 0.5f) + blockPos;// - McQueen.pos;
+            b1 = new Vector2(0.5f, -0.5f) + blockPos;// - McQueen.pos;
+            b2 = new Vector2(-0.5f, 0.5f) + blockPos;// - McQueen.pos;
+            b3 = new Vector2(-0.5f, -0.5f) + blockPos;// - McQueen.pos;
 
-            if (IsInside(B, b0) || IsInside(B, b1) || IsInside(B, b2) || IsInside(B, b3))
+            Vector2 bSpace = new Vector2(0.5f, 0.5f);
+
+            Console.WriteLine(p3 + "" + b3);
+
+            if (IsInside(bSpace, p0) || IsInside(bSpace, p1) || IsInside(bSpace, p2) || IsInside(bSpace, p3))
             {
                 return true;
             }
-
 
 
 
