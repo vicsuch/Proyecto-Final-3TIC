@@ -42,6 +42,7 @@
             // 
             // actualisador
             // 
+            this.actualisador.Interval = 10;
             this.actualisador.Tick += new System.EventHandler(this.Actualisador_Tick);
             // 
             // CarShow0
@@ -92,6 +93,9 @@
             this.Controls.Add(this.CarShow0);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load_1);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.CarShow0)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow2)).EndInit();
@@ -101,12 +105,11 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Timer actualisador;
         public System.Windows.Forms.PictureBox CarShow0;
         public System.Windows.Forms.PictureBox CarShow1;
         public System.Windows.Forms.PictureBox CarShow2;
         public System.Windows.Forms.PictureBox CarShow3;
+        public System.Windows.Forms.Timer actualisador;
     }
 }
 

@@ -47,6 +47,8 @@ namespace Proyecto_Final
                 { Convert.ToInt32(Math.Round(McQueen.pos.X)) - 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 1},
                 { Convert.ToInt32(Math.Round(McQueen.pos.X)) + 0, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 1},
             };
+
+            
         }
         Car McQueen = new Car();
 
@@ -94,8 +96,8 @@ namespace Proyecto_Final
 
         public void selectColide()
         {
-            int[] posInt = new int[] { };
-            McQueen.colision
+            //int[] posInt = new int[] { };
+            //McQueen.colision()
         }
 
         private void Actualisador_Tick(object sender, EventArgs e)
@@ -103,10 +105,33 @@ namespace Proyecto_Final
 
             carShow();
 
-      
+            ControlUpdateMode();
 
             McQueen.update();
 
+        }
+
+        public void ControlUpdateMode()
+        {
+            float v = 0.1f;
+            float t = 0.08f;
+
+            if (w)
+            {
+                McQueen.accelerate += v;
+            }
+            if (s)
+            {
+                McQueen.accelerate -= v;
+            }
+            if (a)
+            {
+                McQueen.rotation -= t;
+            }
+            if (d)
+            {
+                McQueen.rotation += t;
+            }
         }
 
         public void blockShow()
@@ -128,8 +153,6 @@ namespace Proyecto_Final
                 }
             }
         }
-
-
 
         public void carShow()
         {
@@ -257,39 +280,82 @@ namespace Proyecto_Final
 
         private void True(object sender, KeyEventArgs e)
         {
-            float v = 0.1f;
-            float t = 0.1f;
 
-            if(e.KeyCode == Keys.W)
-            {
-                McQueen.accelerate += v;
-                
-            }
-            if (e.KeyCode == Keys.S)
-            {
-                McQueen.accelerate -= v;
-
-            }
-            if (e.KeyCode == Keys.A)
-            {
-                McQueen.rotation += t;
-
-            }
-            if (e.KeyCode == Keys.D)
-            {
-                McQueen.rotation -= t;
-
-            }
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
 
         }
+
+        private void Form1_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+
+        bool w = false;
+        bool s = false;
+        bool a = false;
+        bool d = false;
+
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+
+
+            
+            if (e.KeyCode == Keys.W)
+            {
+                w = true;
+
+            }
+            if (e.KeyCode == Keys.S)
+            {
+                s = true;
+
+            }
+            if (e.KeyCode == Keys.A)
+            {
+                a = true;
+
+            }
+            if (e.KeyCode == Keys.D)
+            {
+                d = true;
+
+            }
+        }
+
+
+
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.W)
+            {
+                w = false;
+
+            }
+            if (e.KeyCode == Keys.S)
+            {
+                s = false;
+
+            }
+            if (e.KeyCode == Keys.A)
+            {
+                a = false;
+
+            }
+            if (e.KeyCode == Keys.D)
+            {
+                d = false;
+
+            }
+        }
     }
     public class Car
     {
-        
+        float updateTime = 5f/100f; //default time 100 ms
 
         public Vector2 pos = new Vector2(0f, 0f);
         Vector2 vel = new Vector2(0f, 0f);
@@ -353,23 +419,26 @@ namespace Proyecto_Final
 
             float max = dotProduct * 0.9f + accelerate;
 
-            float maxTurn = 0.3f;
-
-            if (max > maxTurn)
-            {
-                max = maxTurn;
-            }
-            else if (max < -maxTurn)
-            {
-                max = -maxTurn;
-            }
             accelerate = 0;
 
+            float maxSpeed = 0.3f;
 
-            vel = Vector2.Transform(new Vector2(max, dotProduct2 * 0.1f), rotate);
+            if (max > maxSpeed)
+            {
+                max = maxSpeed;
+            }
+            else if (max < -maxSpeed)
+            {
+                max = -maxSpeed;
+            }
+            
+            
+
+
+            vel = Vector2.Transform(new Vector2(max, dotProduct2 * 0.9f), rotate);
             Console.WriteLine(vel);
 
-            pos += vel;
+            pos += vel * updateTime;
 
         }
         
