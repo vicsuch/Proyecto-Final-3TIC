@@ -20,6 +20,7 @@ namespace Proyecto_Final
         Vector2 scale = new Vector2(40f, 40f);
         string[] map;
         public float bSize = 100f;
+        int[,] refInt;
 
         public Form1()
         {
@@ -35,6 +36,17 @@ namespace Proyecto_Final
             //MessageBox.Show("" + McQueen.pos);
             blockShow();
             actualisador.Enabled = true;
+
+            refInt = new int[,] {
+                { Convert.ToInt32(Math.Round(McQueen.pos.X)) + 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 1},
+                { Convert.ToInt32(Math.Round(McQueen.pos.X)) + 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 0},
+                { Convert.ToInt32(Math.Round(McQueen.pos.X)) + 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) - 1},
+                { Convert.ToInt32(Math.Round(McQueen.pos.X)) + 0, Convert.ToInt32(Math.Round(McQueen.pos.Y)) - 1},
+                { Convert.ToInt32(Math.Round(McQueen.pos.X)) - 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) - 1},
+                { Convert.ToInt32(Math.Round(McQueen.pos.X)) - 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 0},
+                { Convert.ToInt32(Math.Round(McQueen.pos.X)) - 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 1},
+                { Convert.ToInt32(Math.Round(McQueen.pos.X)) + 0, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 1},
+            };
         }
         Car McQueen = new Car();
 
@@ -80,10 +92,19 @@ namespace Proyecto_Final
         }
 
 
+        public void selectColide()
+        {
+            int[] posInt = new int[] { };
+            McQueen.colision
+        }
+
         private void Actualisador_Tick(object sender, EventArgs e)
         {
 
             carShow();
+
+      
+
             McQueen.update();
 
         }
@@ -112,38 +133,21 @@ namespace Proyecto_Final
 
         public void carShow()
         {
-            
-           
+
+            Vector2 move = new Vector2(15f, 15f);
 
             Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, McQueen.rotation);
 
-            Vector2 p0 = Vector2.Transform(McQueen.size * scale, rotate) + (McQueen.pos * scale);
-            Vector2 p1 = Vector2.Transform(McQueen.size * new Vector2(1, -1) * scale, rotate) + (McQueen.pos * scale);
-            Vector2 p2 = Vector2.Transform(McQueen.size * new Vector2(-1, 1) * scale, rotate) + (McQueen.pos * scale);
-            Vector2 p3 = Vector2.Transform(McQueen.size * new Vector2(-1, -1) * scale, rotate) + (McQueen.pos * scale);
+            Vector2 p0 = Vector2.Transform(McQueen.size * scale, rotate) + (McQueen.pos * scale) + move;
+            Vector2 p1 = Vector2.Transform(McQueen.size * new Vector2(1, -1) * scale, rotate) + (McQueen.pos * scale) + move;
+            Vector2 p2 = Vector2.Transform(McQueen.size * new Vector2(-1, 1) * scale, rotate) + (McQueen.pos * scale) + move;
+            Vector2 p3 = Vector2.Transform(McQueen.size * new Vector2(-1, -1) * scale, rotate) + (McQueen.pos * scale) + move;
 
 
             CarShow0.Location = new Point(Convert.ToInt32(p0.X), Convert.ToInt32(p0.Y));
             CarShow1.Location = new Point(Convert.ToInt32(p1.X), Convert.ToInt32(p1.Y));
             CarShow2.Location = new Point(Convert.ToInt32(p2.X), Convert.ToInt32(p2.Y));
             CarShow3.Location = new Point(Convert.ToInt32(p3.X), Convert.ToInt32(p3.Y));
-
-            
-
-            int[,] refInt = new int[,] {
-                { Convert.ToInt32(Math.Round(McQueen.pos.X)) + 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 0},
-                { Convert.ToInt32(Math.Round(McQueen.pos.X)) + 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 1},
-                { Convert.ToInt32(Math.Round(McQueen.pos.X)) + 0, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 1},
-                { Convert.ToInt32(Math.Round(McQueen.pos.X)) - 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 1},
-                { Convert.ToInt32(Math.Round(McQueen.pos.X)) - 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 0},
-                { Convert.ToInt32(Math.Round(McQueen.pos.X)) - 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) - 1},
-                { Convert.ToInt32(Math.Round(McQueen.pos.X)) - 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 0},
-                { Convert.ToInt32(Math.Round(McQueen.pos.X)) - 1, Convert.ToInt32(Math.Round(McQueen.pos.Y)) + 1},
-            };
-
-            
-
-
         }
 
         public bool carColide(int[] posB)
@@ -250,17 +254,52 @@ namespace Proyecto_Final
         {
 
         }
+
+        private void True(object sender, KeyEventArgs e)
+        {
+            float v = 0.1f;
+            float t = 0.1f;
+
+            if(e.KeyCode == Keys.W)
+            {
+                McQueen.accelerate += v;
+                
+            }
+            if (e.KeyCode == Keys.S)
+            {
+                McQueen.accelerate -= v;
+
+            }
+            if (e.KeyCode == Keys.A)
+            {
+                McQueen.rotation += t;
+
+            }
+            if (e.KeyCode == Keys.D)
+            {
+                McQueen.rotation -= t;
+
+            }
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
     public class Car
     {
         
 
         public Vector2 pos = new Vector2(0f, 0f);
-        Vector2 vel = new Vector2(0.4f, 0f);
-        float rotateVelocity = 0.3f; //in radians per update
+        Vector2 vel = new Vector2(0f, 0f);
+        float rotateVelocity = 0f; //in radians per update
+
+        Vector2 resistance = new Vector2(0.8f,0.1f);
         
         public float rotation = 0f; //in radians
         private Vector2 s = new Vector2(0.25f, 0.2f);
+        public float accelerate = 0f;
 
         
         public Vector2 size
@@ -292,21 +331,43 @@ namespace Proyecto_Final
         public void update()
         {
 
+            
+
+            
+
             float ninety = Convert.ToSingle((180d / Math.PI) * 90d);
 
             rotation += rotateVelocity;
 
             Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, rotation);
 
-            Quaternion rotate2 = Quaternion.CreateFromYawPitchRoll(0f, 0f, rotation + ninety);
+            Quaternion rotate2 = Quaternion.CreateFromYawPitchRoll(0f, 0f, rotation - ninety);
 
             float dotProduct = Vector2.Dot(vel, Vector2.Transform(new Vector2(1, 0), rotate));
 
-            float dotProduct2 = Vector2.Dot(vel, Vector2.Transform(new Vector2(1, 0), rotate2));
+            float dotProduct2 = Vector2.Dot(vel, Vector2.Transform(new Vector2(0, 1), rotate));
 
             Console.WriteLine("" + dotProduct + " - " + dotProduct2);
 
-            vel = Vector2.Transform(new Vector2(dotProduct, dotProduct2 * 1f), rotate);
+
+
+            float max = dotProduct * 0.9f + accelerate;
+
+            float maxTurn = 0.3f;
+
+            if (max > maxTurn)
+            {
+                max = maxTurn;
+            }
+            else if (max < -maxTurn)
+            {
+                max = -maxTurn;
+            }
+            accelerate = 0;
+
+
+            vel = Vector2.Transform(new Vector2(max, dotProduct2 * 0.1f), rotate);
+            Console.WriteLine(vel);
 
             pos += vel;
 
