@@ -34,6 +34,7 @@
             this.CarShow1 = new System.Windows.Forms.PictureBox();
             this.CarShow2 = new System.Windows.Forms.PictureBox();
             this.CarShow3 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow2)).BeginInit();
@@ -82,11 +83,22 @@
             this.CarShow3.TabIndex = 3;
             this.CarShow3.TabStop = false;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(602, 67);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "label1";
+            this.label1.Click += new System.EventHandler(this.Label1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.CarShow3);
             this.Controls.Add(this.CarShow2);
             this.Controls.Add(this.CarShow1);
@@ -101,6 +113,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.CarShow2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow3)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -110,6 +123,7 @@
         public System.Windows.Forms.PictureBox CarShow2;
         public System.Windows.Forms.PictureBox CarShow3;
         public System.Windows.Forms.Timer actualisador;
+        private System.Windows.Forms.Label label1;
     }
 }
 
