@@ -135,6 +135,80 @@ namespace Proyecto_Final
             label1.Text = k;
         }
 
+        public void colisionDetection()
+        {
+            //int[] posInt = new int[] { };
+            //McQueen.colision()
+
+            int[] carPos = new int[]
+            {
+                Convert.ToInt32(Math.Round(McQueen.pos.X)),
+                Convert.ToInt32(Math.Round(McQueen.pos.Y))
+            };
+            Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, McQueen.rotation);
+
+
+            Vector2 p0 = Vector2.Transform(McQueen.size, rotate) + (McQueen.pos);
+            Vector2 p1 = Vector2.Transform(McQueen.size * new Vector2(1, -1), rotate) + (McQueen.pos);
+            Vector2 p2 = Vector2.Transform(McQueen.size * new Vector2(-1, 1), rotate) + (McQueen.pos);
+            Vector2 p3 = Vector2.Transform(McQueen.size * new Vector2(-1, -1), rotate) + (McQueen.pos);
+
+            int[,] carPoints = new int[,]
+            {
+                { Convert.ToInt32(Math.Round(p0.X)) , Convert.ToInt32(Math.Round(p0.Y))},
+                { Convert.ToInt32(Math.Round(p1.X)) , Convert.ToInt32(Math.Round(p1.Y))},
+                { Convert.ToInt32(Math.Round(p2.X)) , Convert.ToInt32(Math.Round(p2.Y))},
+                { Convert.ToInt32(Math.Round(p3.X)) , Convert.ToInt32(Math.Round(p3.Y))}
+            };
+
+            McQueen.notMoveSides = new int[] { 0, 0 };
+
+            string f = "Pos: " + carPos[0] + " | " + carPos[1] + "\n";
+            for (int i = 0; i < 4; i++)
+            {
+                f += i + ": " + carPoints[i, 0] + " | " + carPoints[i, 1];
+                try
+                {
+                    if (map[carPoints[i, 1]][carPoints[i, 0]] == '█')
+                    {
+                        f += " -- ";
+                        if(carPos[0] < carPoints[i, 0])
+                        {
+                            f += "izquierda";
+                            McQueen.notMoveSides[0] = 1;
+                            //McQueen.pos.X = Convert.ToSingle(carPos[0]) + 0.5f;
+                        }
+                        if (carPos[0] > carPoints[i, 0])
+                        {
+                            f += "derecha";
+                            McQueen.notMoveSides[0] = -1;
+                            //McQueen.pos.X = Convert.ToSingle(carPos[0]) + 0.5f;
+                        }
+                        if (carPos[1] < carPoints[i, 1])
+                        {
+                            f += "abajo";
+                            McQueen.notMoveSides[1] = 1;
+                            //McQueen.pos.X = Convert.ToSingle(carPos[0]) + 0.5f;
+                        }
+                        if (carPos[1] > carPoints[i, 1])
+                        {
+                            f += "arriba";
+                            McQueen.notMoveSides[1] = -1;
+                            //McQueen.pos.X = Convert.ToSingle(carPos[0]) + 0.5f;
+                        }
+                    }
+                }
+                catch
+                {
+                    label1.Text = "" + i + "\n" + carPoints[0,0];
+                }
+                f += "\n";
+            }
+            label1.Text = f;
+
+            
+        }
+
         private void Actualisador_Tick(object sender, EventArgs e)
         {
 
@@ -142,7 +216,7 @@ namespace Proyecto_Final
 
             ControlUpdateMode();
 
-            selectColide();
+            colisionDetection();
 
             McQueen.update();
 
@@ -220,8 +294,6 @@ namespace Proyecto_Final
             CarShow3.Location = new Point(Convert.ToInt32(p3.X), Convert.ToInt32(p3.Y));
         }
 
-
-
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -281,8 +353,6 @@ namespace Proyecto_Final
             }
         }
 
-
-
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.W)
@@ -314,10 +384,12 @@ namespace Proyecto_Final
     }
     public class Car
     {
+        public int[] notMoveSides = new int[] { 0, 0 };
+
         float updateTime = 5f/100f; //default time 100 ms
 
         public Vector2 pos = new Vector2(0f, 0f);
-        Vector2 vel = new Vector2(0f, 0f);
+        public Vector2 vel = new Vector2(0f, 0f);
         public float rotateVelocity = 0f; //in radians per update
 
         Vector2 resistance = new Vector2(0.8f,0.1f);
@@ -404,6 +476,24 @@ namespace Proyecto_Final
 
             vel = Vector2.Transform(new Vector2(max, dotProduct2 * 0.9f), rotate);
             Console.WriteLine(vel);
+
+            if(notMoveSides[0] > 0 && vel.X > 0)
+            {
+                vel.X = 0f;
+            }
+            if (notMoveSides[0] < 0 && vel.X < 0)
+            {
+                vel.X = 0f;
+            }
+            if (notMoveSides[1] > 0 && vel.Y > 0)
+            {
+                vel.Y = 0f;
+            }
+            if (notMoveSides[1] < 0 && vel.Y < 0)
+            {
+                vel.Y = 0f;
+            }
+
 
             pos += vel * updateTime;
             rotation += rotateVelocity * updateTime;
