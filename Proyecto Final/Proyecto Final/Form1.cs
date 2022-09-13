@@ -15,14 +15,16 @@ namespace Proyecto_Final
 {
 
 
-    public partial class Form1 : Form
+    public partial class PantallaDeJuego : Form
     {
         Vector2 scale = new Vector2(40f, 40f);
         string[] map;
         public float bSize = 100f;
         int[,] refInt;
+        bool showEverything = true;
+        public bool win = false;
 
-        public Form1()
+        public PantallaDeJuego()
         {
             InitializeComponent();
 
@@ -34,7 +36,16 @@ namespace Proyecto_Final
 
             McQueen.McQueen(map);
             //MessageBox.Show("" + McQueen.pos);
-            blockShow();
+
+            if (showEverything)
+            {
+                blockShow();
+                CarShow0.Visible = true;
+                CarShow1.Visible = true;
+                CarShow2.Visible = true;
+                CarShow3.Visible = true;
+                label1.Visible = true;
+            }
             actualisador.Enabled = true;
 
             refInt = new int[,] {
@@ -51,7 +62,6 @@ namespace Proyecto_Final
             
         }
         Car McQueen = new Car();
-
 
         public static string[] mapPreset()//C:\Users\47701283\source\repos\Laberinto\Laberinto\mapas\primerMapa.txt
         {
@@ -145,6 +155,12 @@ namespace Proyecto_Final
                 Convert.ToInt32(Math.Round(McQueen.pos.X)),
                 Convert.ToInt32(Math.Round(McQueen.pos.Y))
             };
+
+            if (map[carPos[1]][carPos[0]]=='f')
+            {
+                win = true;
+                this.Hide();
+            }
             Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, McQueen.rotation);
 
 
@@ -212,7 +228,7 @@ namespace Proyecto_Final
         private void Actualisador_Tick(object sender, EventArgs e)
         {
 
-            carShow();
+            if (showEverything) { carShow(); }
 
             ControlUpdateMode();
 
@@ -294,31 +310,10 @@ namespace Proyecto_Final
             CarShow3.Location = new Point(Convert.ToInt32(p3.X), Convert.ToInt32(p3.Y));
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void CarShow1_Click(object sender, EventArgs e)
         {
 
         }
-
-        private void True(object sender, KeyEventArgs e)
-        {
-
-        }
-
-        private void Button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load_1(object sender, EventArgs e)
-        {
-
-        }
-
 
         bool w = false;
         bool s = false;
@@ -328,13 +323,13 @@ namespace Proyecto_Final
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-
+            
 
             
             if (e.KeyCode == Keys.W)
             {
                 w = true;
-
+                
             }
             if (e.KeyCode == Keys.S)
             {
@@ -377,10 +372,11 @@ namespace Proyecto_Final
             }
         }
 
-        private void Label1_Click(object sender, EventArgs e)
+        private void BtnDeRegreso_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
         }
+
     }
     public class Car
     {
@@ -418,11 +414,11 @@ namespace Proyecto_Final
                 if (x != -1)
                 {
                     pos = new Vector2(x, y);
-                    MessageBox.Show(""+pos);
+                    
                     return;
                 }
             }
-            pos = new Vector2(-1, -1);
+            
         }
 
         public void update()

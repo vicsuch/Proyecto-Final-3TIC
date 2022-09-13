@@ -1,6 +1,6 @@
 ﻿namespace Proyecto_Final
 {
-    partial class Form1
+    partial class PantallaDeJuego
     {
         /// <summary>
         /// Variable del diseñador necesaria.
@@ -35,6 +35,7 @@
             this.CarShow2 = new System.Windows.Forms.PictureBox();
             this.CarShow3 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.BtnDeRegreso = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow2)).BeginInit();
@@ -49,39 +50,43 @@
             // CarShow0
             // 
             this.CarShow0.BackColor = System.Drawing.Color.Lime;
-            this.CarShow0.Location = new System.Drawing.Point(163, 95);
+            this.CarShow0.Location = new System.Drawing.Point(778, 12);
             this.CarShow0.Name = "CarShow0";
             this.CarShow0.Size = new System.Drawing.Size(10, 10);
             this.CarShow0.TabIndex = 0;
             this.CarShow0.TabStop = false;
+            this.CarShow0.Visible = false;
             // 
             // CarShow1
             // 
             this.CarShow1.BackColor = System.Drawing.Color.Lime;
-            this.CarShow1.Location = new System.Drawing.Point(206, 108);
+            this.CarShow1.Location = new System.Drawing.Point(778, 25);
             this.CarShow1.Name = "CarShow1";
             this.CarShow1.Size = new System.Drawing.Size(10, 10);
             this.CarShow1.TabIndex = 1;
             this.CarShow1.TabStop = false;
+            this.CarShow1.Visible = false;
             this.CarShow1.Click += new System.EventHandler(this.CarShow1_Click);
             // 
             // CarShow2
             // 
             this.CarShow2.BackColor = System.Drawing.Color.DarkRed;
-            this.CarShow2.Location = new System.Drawing.Point(219, 132);
+            this.CarShow2.Location = new System.Drawing.Point(762, 12);
             this.CarShow2.Name = "CarShow2";
             this.CarShow2.Size = new System.Drawing.Size(10, 10);
             this.CarShow2.TabIndex = 2;
             this.CarShow2.TabStop = false;
+            this.CarShow2.Visible = false;
             // 
             // CarShow3
             // 
             this.CarShow3.BackColor = System.Drawing.Color.DarkRed;
-            this.CarShow3.Location = new System.Drawing.Point(163, 160);
+            this.CarShow3.Location = new System.Drawing.Point(762, 25);
             this.CarShow3.Name = "CarShow3";
             this.CarShow3.Size = new System.Drawing.Size(10, 10);
             this.CarShow3.TabIndex = 3;
             this.CarShow3.TabStop = false;
+            this.CarShow3.Visible = false;
             // 
             // label1
             // 
@@ -91,21 +96,34 @@
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 4;
             this.label1.Text = "label1";
-            this.label1.Click += new System.EventHandler(this.Label1_Click);
+            this.label1.Visible = false;
             // 
-            // Form1
+            // BtnDeRegreso
+            // 
+            this.BtnDeRegreso.Location = new System.Drawing.Point(12, 12);
+            this.BtnDeRegreso.Name = "BtnDeRegreso";
+            this.BtnDeRegreso.Size = new System.Drawing.Size(75, 23);
+            this.BtnDeRegreso.TabIndex = 5;
+            this.BtnDeRegreso.TabStop = false;
+            this.BtnDeRegreso.Text = "Regresar";
+            this.BtnDeRegreso.UseVisualStyleBackColor = true;
+            this.BtnDeRegreso.Click += new System.EventHandler(this.BtnDeRegreso_Click);
+            // 
+            // PantallaDeJuego
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ControlBox = false;
+            this.Controls.Add(this.BtnDeRegreso);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CarShow3);
             this.Controls.Add(this.CarShow2);
             this.Controls.Add(this.CarShow1);
             this.Controls.Add(this.CarShow0);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load_1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Name = "PantallaDeJuego";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.CarShow0)).EndInit();
@@ -124,6 +142,7 @@
         public System.Windows.Forms.PictureBox CarShow3;
         public System.Windows.Forms.Timer actualisador;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button BtnDeRegreso;
     }
 }
 
