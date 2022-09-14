@@ -68,6 +68,12 @@
     <Compile Include="PantallaDeGanar.Designer.cs">
       <DependentUpon>PantallaDeGanar.cs</DependentUpon>
     </Compile>
+    <Compile Include="PantallaDeOpciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PantallaDeOpciones.Designer.cs">
+      <DependentUpon>PantallaDeOpciones.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -78,6 +84,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PantallaDeGanar.resx">
       <DependentUpon>PantallaDeGanar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PantallaDeOpciones.resx">
+      <DependentUpon>PantallaDeOpciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

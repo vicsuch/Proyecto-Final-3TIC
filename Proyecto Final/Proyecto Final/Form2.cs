@@ -30,10 +30,17 @@ namespace Proyecto_Final
                 P3.ShowDialog();
             }
 
-            this.Show();
+            this.Show();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
             
         }
 
+        private void BtnDeOpciones_Click(object sender, EventArgs e)
+        {
+            //this.Hide();
+            PantallaDeOpciones P4 = new PantallaDeOpciones();
+            P4.ShowDialog();
 
+            this.Show();
+        }
     }
 }

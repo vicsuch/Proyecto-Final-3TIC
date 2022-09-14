@@ -29,11 +29,12 @@
         private void InitializeComponent()
         {
             this.BtnDeJuego = new System.Windows.Forms.Button();
+            this.BtnDeOpciones = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // BtnDeJuego
             // 
-            this.BtnDeJuego.Location = new System.Drawing.Point(353, 108);
+            this.BtnDeJuego.Location = new System.Drawing.Point(363, 107);
             this.BtnDeJuego.Name = "BtnDeJuego";
             this.BtnDeJuego.Size = new System.Drawing.Size(75, 23);
             this.BtnDeJuego.TabIndex = 0;
@@ -41,11 +42,22 @@
             this.BtnDeJuego.UseVisualStyleBackColor = true;
             this.BtnDeJuego.Click += new System.EventHandler(this.Button1_Click);
             // 
+            // BtnDeOpciones
+            // 
+            this.BtnDeOpciones.Location = new System.Drawing.Point(363, 169);
+            this.BtnDeOpciones.Name = "BtnDeOpciones";
+            this.BtnDeOpciones.Size = new System.Drawing.Size(75, 23);
+            this.BtnDeOpciones.TabIndex = 1;
+            this.BtnDeOpciones.Text = "Opciones";
+            this.BtnDeOpciones.UseVisualStyleBackColor = true;
+            this.BtnDeOpciones.Click += new System.EventHandler(this.BtnDeOpciones_Click);
+            // 
             // PantallaDeInicio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.BtnDeOpciones);
             this.Controls.Add(this.BtnDeJuego);
             this.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -57,5 +69,6 @@
         #endregion
 
         private System.Windows.Forms.Button BtnDeJuego;
+        private System.Windows.Forms.Button BtnDeOpciones;
     }
 }

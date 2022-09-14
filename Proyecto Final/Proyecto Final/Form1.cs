@@ -68,11 +68,26 @@ namespace Proyecto_Final
             //es necesario tener "using System.IO;" para poder usar esta funcion
             string[] array1;
             String line;
+            string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, "mapaSeleccionado.txt");
+
             try
             {
-                string filePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, "mapas\\primerMapa.txt");
+                StreamReader sr = new StreamReader(path);
+                path = sr.ReadLine();
+                sr.Close();
+            }
+            catch
+            {
+
+            }
+
+            try
+            {
+                
+                string filePath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
                 //Pass the file path and file name to the StreamReader constructor
-                StreamReader sr = new StreamReader(filePath);
+
+                StreamReader sr = new StreamReader(Path.Combine(filePath, "mapas", path));
                 //Read the first line of text
                 array1 = new string[Convert.ToInt32(sr.ReadLine())];
                 line = sr.ReadLine();

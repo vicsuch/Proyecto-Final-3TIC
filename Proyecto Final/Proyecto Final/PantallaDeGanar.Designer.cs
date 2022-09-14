@@ -34,11 +34,12 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(324, 211);
+            this.label1.Location = new System.Drawing.Point(177, 189);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.Size = new System.Drawing.Size(455, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
+            this.label1.Text = "Memo dice: Felicidades equizofrenico, ganaste! Te mando un regalo para tu amigo i" +
+    "maginario :)";
             this.label1.Click += new System.EventHandler(this.Label1_Click);
             // 
             // PantallaDeGanar
