@@ -23,6 +23,7 @@ namespace Proyecto_Final
         int[,] refInt;
         bool showEverything = true;
         public bool win = false;
+        
 
         public PantallaDeJuego()
         {
@@ -108,14 +109,19 @@ namespace Proyecto_Final
             }
             catch (Exception e)
             {
-                MessageBox.Show("Exception: " + e.Message);
+                MessageBox.Show("Hubo un error al cargar el mapa. \n Porfavor intente volver a cargar el mapa. \n" + "Excepción: " + e.Message);
             }
             finally
             {
                 //MessageBox.Show("Executing finally block.");
             }
 
-            return new string[0];
+            return new string[]
+            {
+                "█████",
+                "█i█f█",
+                "█████"
+            };
         }
 
 
@@ -275,20 +281,24 @@ namespace Proyecto_Final
                 McQueen.rotateVelocity += t;
             }
         }
+        
 
         public void blockShow()
         {
             for (int i = 0; i < map.Length; i++)
             {
-                for(int j = 0 ; j < map[i].Length; j++)
+                for (int j = 0; j < map[i].Length; j++)
                 {
-                    if(map[i][j] == '█')
+                    String imgPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, "bloques",(map[i][j] + ".png"));
+                    if (File.Exists(imgPath))
                     {
                         PictureBox pic = new PictureBox();
                         pic.Location = new Point(Convert.ToInt32(scale.X) * j, Convert.ToInt32(scale.Y) * i);
                         pic.BackColor = Color.Black;
                         pic.Name = "pic" + i + "--" + j;
                         pic.Size = new Size(Convert.ToInt32(scale.X), Convert.ToInt32(scale.Y));
+                        pic.BackgroundImage = Image.FromFile(imgPath);
+                        pic.BackgroundImageLayout.Equals(1);
 
                         this.Controls.Add(pic);
                     }
@@ -485,8 +495,8 @@ namespace Proyecto_Final
             }
             rotateVelocity *= 0.9f;
 
-            vel = Vector2.Transform(new Vector2(max, dotProduct2 * 0.9f), rotate);
-            Console.WriteLine(vel);
+            vel = Vector2.Transform(new Vector2(max, dotProduct2 * 1f), rotate);
+            //Console.WriteLine(vel);
 
             if(notMoveSides[0] > 0 && vel.X > 0)
             {
