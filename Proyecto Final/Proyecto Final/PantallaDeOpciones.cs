@@ -14,6 +14,7 @@ namespace Proyecto_Final
     public partial class PantallaDeOpciones : Form
     {
         string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, "mapaSeleccionado.txt");
+        public bool ShowEverything = false;
         public PantallaDeOpciones()
         {
             InitializeComponent();
@@ -72,14 +73,5 @@ namespace Proyecto_Final
 
         }
 
-        private void OpenFileDialog1_FileOk(object sender, CancelEventArgs e)
-        {
-
-        }
-
-        private void OpenFileDialog1_HelpRequest(object sender, EventArgs e)
-        {
-
-        }
     }
 }

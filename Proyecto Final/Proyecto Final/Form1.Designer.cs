@@ -29,64 +29,28 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PantallaDeJuego));
             this.actualisador = new System.Windows.Forms.Timer(this.components);
-            this.CarShow0 = new System.Windows.Forms.PictureBox();
-            this.CarShow1 = new System.Windows.Forms.PictureBox();
-            this.CarShow2 = new System.Windows.Forms.PictureBox();
-            this.CarShow3 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.BtnDeRegreso = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.CarShow0)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CarShow1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CarShow2)).BeginInit();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.ShowCurrent = new System.Windows.Forms.PictureBox();
+            this.CarShow3 = new System.Windows.Forms.PictureBox();
+            this.CarShow2 = new System.Windows.Forms.PictureBox();
+            this.CarShow1 = new System.Windows.Forms.PictureBox();
+            this.CarShow0 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ShowCurrent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CarShow2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CarShow1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CarShow0)).BeginInit();
             this.SuspendLayout();
             // 
             // actualisador
             // 
             this.actualisador.Interval = 10;
             this.actualisador.Tick += new System.EventHandler(this.Actualisador_Tick);
-            // 
-            // CarShow0
-            // 
-            this.CarShow0.BackColor = System.Drawing.Color.Lime;
-            this.CarShow0.Location = new System.Drawing.Point(778, 12);
-            this.CarShow0.Name = "CarShow0";
-            this.CarShow0.Size = new System.Drawing.Size(10, 10);
-            this.CarShow0.TabIndex = 0;
-            this.CarShow0.TabStop = false;
-            this.CarShow0.Visible = false;
-            // 
-            // CarShow1
-            // 
-            this.CarShow1.BackColor = System.Drawing.Color.Lime;
-            this.CarShow1.Location = new System.Drawing.Point(778, 25);
-            this.CarShow1.Name = "CarShow1";
-            this.CarShow1.Size = new System.Drawing.Size(10, 10);
-            this.CarShow1.TabIndex = 1;
-            this.CarShow1.TabStop = false;
-            this.CarShow1.Visible = false;
-            this.CarShow1.Click += new System.EventHandler(this.CarShow1_Click);
-            // 
-            // CarShow2
-            // 
-            this.CarShow2.BackColor = System.Drawing.Color.DarkRed;
-            this.CarShow2.Location = new System.Drawing.Point(762, 12);
-            this.CarShow2.Name = "CarShow2";
-            this.CarShow2.Size = new System.Drawing.Size(10, 10);
-            this.CarShow2.TabIndex = 2;
-            this.CarShow2.TabStop = false;
-            this.CarShow2.Visible = false;
-            // 
-            // CarShow3
-            // 
-            this.CarShow3.BackColor = System.Drawing.Color.DarkRed;
-            this.CarShow3.Location = new System.Drawing.Point(762, 25);
-            this.CarShow3.Name = "CarShow3";
-            this.CarShow3.Size = new System.Drawing.Size(10, 10);
-            this.CarShow3.TabIndex = 3;
-            this.CarShow3.TabStop = false;
-            this.CarShow3.Visible = false;
             // 
             // label1
             // 
@@ -109,27 +73,96 @@
             this.BtnDeRegreso.UseVisualStyleBackColor = true;
             this.BtnDeRegreso.Click += new System.EventHandler(this.BtnDeRegreso_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = global::Proyecto_Final.Properties.Resources.brujula;
+            this.pictureBox1.Location = new System.Drawing.Point(297, 88);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(350, 350);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 7;
+            this.pictureBox1.TabStop = false;
+            // 
+            // ShowCurrent
+            // 
+            this.ShowCurrent.Location = new System.Drawing.Point(12, 77);
+            this.ShowCurrent.Name = "ShowCurrent";
+            this.ShowCurrent.Size = new System.Drawing.Size(200, 200);
+            this.ShowCurrent.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ShowCurrent.TabIndex = 6;
+            this.ShowCurrent.TabStop = false;
+            // 
+            // CarShow3
+            // 
+            this.CarShow3.BackColor = System.Drawing.Color.DarkRed;
+            this.CarShow3.Location = new System.Drawing.Point(762, 25);
+            this.CarShow3.Name = "CarShow3";
+            this.CarShow3.Size = new System.Drawing.Size(10, 10);
+            this.CarShow3.TabIndex = 3;
+            this.CarShow3.TabStop = false;
+            this.CarShow3.Visible = false;
+            // 
+            // CarShow2
+            // 
+            this.CarShow2.BackColor = System.Drawing.Color.DarkRed;
+            this.CarShow2.Location = new System.Drawing.Point(762, 12);
+            this.CarShow2.Name = "CarShow2";
+            this.CarShow2.Size = new System.Drawing.Size(10, 10);
+            this.CarShow2.TabIndex = 2;
+            this.CarShow2.TabStop = false;
+            this.CarShow2.Visible = false;
+            // 
+            // CarShow1
+            // 
+            this.CarShow1.BackColor = System.Drawing.Color.Lime;
+            this.CarShow1.Location = new System.Drawing.Point(778, 25);
+            this.CarShow1.Name = "CarShow1";
+            this.CarShow1.Size = new System.Drawing.Size(10, 10);
+            this.CarShow1.TabIndex = 1;
+            this.CarShow1.TabStop = false;
+            this.CarShow1.Visible = false;
+            this.CarShow1.Click += new System.EventHandler(this.CarShow1_Click);
+            // 
+            // CarShow0
+            // 
+            this.CarShow0.BackColor = System.Drawing.Color.Lime;
+            this.CarShow0.Location = new System.Drawing.Point(778, 12);
+            this.CarShow0.Name = "CarShow0";
+            this.CarShow0.Size = new System.Drawing.Size(10, 10);
+            this.CarShow0.TabIndex = 0;
+            this.CarShow0.TabStop = false;
+            this.CarShow0.Visible = false;
+            // 
             // PantallaDeJuego
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = global::Proyecto_Final.Properties.Resources.fondo_2;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ControlBox = false;
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.ShowCurrent);
             this.Controls.Add(this.BtnDeRegreso);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CarShow3);
             this.Controls.Add(this.CarShow2);
             this.Controls.Add(this.CarShow1);
             this.Controls.Add(this.CarShow0);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PantallaDeJuego";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
-            ((System.ComponentModel.ISupportInitialize)(this.CarShow0)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CarShow1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.CarShow2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ShowCurrent)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CarShow2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CarShow1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CarShow0)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -143,6 +176,8 @@
         public System.Windows.Forms.Timer actualisador;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button BtnDeRegreso;
+        private System.Windows.Forms.PictureBox ShowCurrent;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

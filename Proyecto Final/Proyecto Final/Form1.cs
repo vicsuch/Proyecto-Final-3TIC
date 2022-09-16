@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 using System.IO;
 using System.Numerics;
+using System.Drawing.Drawing2D;
 
 namespace Proyecto_Final
 {
@@ -21,9 +22,49 @@ namespace Proyecto_Final
         string[] map;
         public float bSize = 100f;
         int[,] refInt;
-        bool showEverything = true;
+        public bool showEverything = false;
         public bool win = false;
-        
+        Bitmap brujula;
+
+        /// <summary>
+        /// method to rotate an image either clockwise or counter-clockwise
+        /// </summary>
+        /// <param name="img">the image to be rotated</param>
+        /// <param name="rotationAngle">the angle (in degrees).
+        /// NOTE: 
+        /// Positive values will rotate clockwise
+        /// negative values will rotate counter-clockwise
+        /// </param>
+        /// <returns></returns>
+        public static Image RotateImage(Image img, float rotationAngle)
+        {
+            //create an empty Bitmap image
+            Bitmap bmp = new Bitmap(img.Width, img.Height);
+
+            //turn the Bitmap into a Graphics object
+            Graphics gfx = Graphics.FromImage(bmp);
+
+            //now we set the rotation point to the center of our image
+            gfx.TranslateTransform((float)bmp.Width / 2, (float)bmp.Height / 2);
+
+            //now rotate the image
+            gfx.RotateTransform(rotationAngle);
+
+            gfx.TranslateTransform(-(float)bmp.Width / 2, -(float)bmp.Height / 2);
+
+            //set the InterpolationMode to HighQualityBicubic so to ensure a high
+            //quality image once it is transformed to the specified size
+            gfx.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+            //now draw our new image onto the graphics object
+            gfx.DrawImage(img, new Point(0, 0));
+
+            //dispose of our Graphics object
+            gfx.Dispose();
+
+            //return the image
+            return bmp;
+        }
 
         public PantallaDeJuego()
         {
@@ -47,7 +88,7 @@ namespace Proyecto_Final
                 CarShow3.Visible = true;
                 label1.Visible = true;
             }
-            actualisador.Enabled = true;
+
 
             refInt = new int[,] {
                 { 1, 1},
@@ -60,7 +101,8 @@ namespace Proyecto_Final
                 { 0,-1},
             };
 
-            
+            brujula = new Bitmap(Image.FromFile(Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, "Resources", "brujula.png")));
+            actualisador.Enabled = true;
         }
         Car McQueen = new Car();
 
@@ -182,6 +224,17 @@ namespace Proyecto_Final
                 win = true;
                 this.Hide();
             }
+            String imgPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, "bloques", (map[carPos[1]][carPos[0]] + ".png"));
+            if (File.Exists(imgPath))
+            {
+                ShowCurrent.Image = Image.FromFile(imgPath);
+                ShowCurrent.Visible = true;
+            }
+            else
+            {
+                ShowCurrent.Visible = false;
+            }
+
             Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, McQueen.rotation);
 
 
@@ -245,9 +298,10 @@ namespace Proyecto_Final
 
             
         }
-
+        int count = 0;
         private void Actualisador_Tick(object sender, EventArgs e)
         {
+            
 
             if (showEverything) { carShow(); }
 
@@ -257,12 +311,29 @@ namespace Proyecto_Final
 
             McQueen.update();
 
+            
+
+            if (count == 4)
+            {
+                count = 0;
+                ShowBrujula();
+            }
+            count++;
+        }
+
+        
+
+        public void ShowBrujula()
+        {
+            pictureBox1.Location = new Point(this.Size.Width / 2 - pictureBox1.Size.Width / 2, this.Size.Height / 2 - pictureBox1.Height / 2);
+            
+            pictureBox1.Image = RotateImage(brujula, Convert.ToSingle(180 / Math.PI) * McQueen.rotation + 90);
         }
 
         public void ControlUpdateMode()
         {
             float v = 0.1f;
-            float t = 0.08f;
+            float t = 0.2f;
 
             if (w)
             {
@@ -400,7 +471,9 @@ namespace Proyecto_Final
         private void BtnDeRegreso_Click(object sender, EventArgs e)
         {
             this.Hide();
+            actualisador.Enabled = false;
         }
+
 
     }
     public class Car
@@ -471,7 +544,7 @@ namespace Proyecto_Final
 
             accelerate = 0;
 
-            float maxSpeed = 0.5f;
+            float maxSpeed = 1f;
 
             if (max > maxSpeed)
             {
@@ -483,7 +556,7 @@ namespace Proyecto_Final
             }
 
 
-            float maxTurn = 2f;
+            float maxTurn = 1f;
             
             if (rotateVelocity > maxTurn)
             {
@@ -495,7 +568,7 @@ namespace Proyecto_Final
             }
             rotateVelocity *= 0.9f;
 
-            vel = Vector2.Transform(new Vector2(max, dotProduct2 * 1f), rotate);
+            vel = Vector2.Transform(new Vector2(max, dotProduct2 * 0.7f), rotate);
             //Console.WriteLine(vel);
 
             if(notMoveSides[0] > 0 && vel.X > 0)
