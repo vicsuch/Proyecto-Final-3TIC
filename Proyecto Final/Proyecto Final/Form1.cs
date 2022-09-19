@@ -22,7 +22,7 @@ namespace Proyecto_Final
         string[] map;
         public float bSize = 100f;
         int[,] refInt;
-        public bool showEverything = false;
+        public bool showEverything = true;
         public bool win = false;
         Bitmap brujula;
 
