@@ -22,9 +22,9 @@ namespace Proyecto_Final
         string[] map;
         public float bSize = 100f;
         int[,] refInt;
-        public bool showEverything = true;
+        public bool showEverything = false;
         public bool win = false;
-        Bitmap brujula;
+        Bitmap flecha;
 
         /// <summary>
         /// method to rotate an image either clockwise or counter-clockwise
@@ -101,7 +101,7 @@ namespace Proyecto_Final
                 { 0,-1},
             };
 
-            brujula = new Bitmap(Image.FromFile(Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, "Resources", "brujula.png")));
+            flecha = new Bitmap(Image.FromFile(Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, "Resources", "flecha.png")));
             actualisador.Enabled = true;
         }
         Car McQueen = new Car();
@@ -313,7 +313,7 @@ namespace Proyecto_Final
 
             
 
-            if (count == 4)
+            if (count == 5)
             {
                 count = 0;
                 ShowBrujula();
@@ -325,15 +325,22 @@ namespace Proyecto_Final
 
         public void ShowBrujula()
         {
-            pictureBox1.Location = new Point(this.Size.Width / 2 - pictureBox1.Size.Width / 2, this.Size.Height / 2 - pictureBox1.Height / 2);
-            
-            pictureBox1.Image = RotateImage(brujula, Convert.ToSingle(180 / Math.PI) * McQueen.rotation + 90);
+            Vector2 fpos = new Vector2(200, 0);
+
+            Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, McQueen.rotation);
+
+            fpos = Vector2.Transform(fpos, rotate);
+
+            //pictureBox1.Image = RotateImage(brujula, Convert.ToSingle(180 / Math.PI) * McQueen.rotation + 90);
+            pictureBox2.BackgroundImage = RotateImage(flecha, Convert.ToSingle(180 / Math.PI) * McQueen.rotation + 90);
+
+            pictureBox2.Location = new Point(Convert.ToInt32(fpos.X) + this.Size.Width/2 - pictureBox2.Size.Width/2,Convert.ToInt32(fpos.Y) + this.Height/2 - pictureBox2.Size.Height/2);
         }
 
         public void ControlUpdateMode()
         {
             float v = 0.1f;
-            float t = 0.2f;
+            float t = 0.4f;
 
             if (w)
             {
@@ -474,7 +481,10 @@ namespace Proyecto_Final
             actualisador.Enabled = false;
         }
 
-
+        private void PantallaDeJuego_Load(object sender, EventArgs e)
+        {
+            pictureBox1.Location = new Point(this.Size.Width / 2 - pictureBox1.Size.Width / 2, this.Size.Height / 2 - pictureBox1.Height / 2);
+        }
     }
     public class Car
     {

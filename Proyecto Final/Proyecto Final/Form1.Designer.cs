@@ -39,12 +39,14 @@
             this.CarShow2 = new System.Windows.Forms.PictureBox();
             this.CarShow1 = new System.Windows.Forms.PictureBox();
             this.CarShow0 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ShowCurrent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow0)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // actualisador
@@ -134,6 +136,17 @@
             this.CarShow0.TabStop = false;
             this.CarShow0.Visible = false;
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox2.BackgroundImage = global::Proyecto_Final.Properties.Resources.flecha;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox2.Location = new System.Drawing.Point(306, 64);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(60, 60);
+            this.pictureBox2.TabIndex = 8;
+            this.pictureBox2.TabStop = false;
+            // 
             // PantallaDeJuego
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -142,6 +155,7 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ControlBox = false;
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.ShowCurrent);
             this.Controls.Add(this.BtnDeRegreso);
@@ -155,6 +169,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "PantallaDeJuego";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.PantallaDeJuego_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -163,6 +178,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.CarShow2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.CarShow0)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -178,6 +194,7 @@
         private System.Windows.Forms.Button BtnDeRegreso;
         private System.Windows.Forms.PictureBox ShowCurrent;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }
 
