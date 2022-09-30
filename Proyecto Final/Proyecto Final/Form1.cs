@@ -18,6 +18,7 @@ namespace Proyecto_Final
 
     public partial class PantallaDeJuego : Form
     {
+        System.IO.Ports.SerialPort ArduinoPort;
         Vector2 scale = new Vector2(40f, 40f);
         string[] map;
         public float bSize = 100f;
@@ -102,6 +103,11 @@ namespace Proyecto_Final
             };
 
             flecha = new Bitmap(Image.FromFile(Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName, "Resources", "flecha.png")));
+            ArduinoPort = new System.IO.Ports.SerialPort();
+            ArduinoPort.PortName = "COM3";  //sustituir por vuestro 
+            ArduinoPort.BaudRate = 9600;
+            ArduinoPort.Open();
+            ArduinoPort.Write("e");
             actualisador.Enabled = true;
         }
         Car McQueen = new Car();
@@ -299,6 +305,7 @@ namespace Proyecto_Final
             
         }
         int count = 0;
+
         private void Actualisador_Tick(object sender, EventArgs e)
         {
             
@@ -311,7 +318,7 @@ namespace Proyecto_Final
 
             McQueen.update();
 
-            
+            serialComunication();
 
             if (count == 5)
             {
@@ -321,7 +328,27 @@ namespace Proyecto_Final
             count++;
         }
 
-        
+        public void serialComunication()
+        {
+            Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, McQueen.rotation);
+            float minimo = 0.1f;
+            float vel = Vector2.Dot(McQueen.vel, Vector2.Transform(new Vector2(1, 0), rotate));
+            Console.WriteLine("" + vel);
+            if (vel > minimo)
+            {
+                ArduinoPort.Write("w");
+            }
+            
+            else if (vel < -minimo)
+            {
+                ArduinoPort.Write("s");
+            }
+
+            if(vel < minimo && vel > -minimo)
+            {
+                ArduinoPort.Write("e");
+            }
+        }
 
         public void ShowBrujula()
         {
@@ -485,6 +512,11 @@ namespace Proyecto_Final
         {
             pictureBox1.Location = new Point(this.Size.Width / 2 - pictureBox1.Size.Width / 2, this.Size.Height / 2 - pictureBox1.Height / 2);
         }
+
+        private void PantallaDeJuego_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (ArduinoPort.IsOpen) ArduinoPort.Close();
+        }
     }
     public class Car
     {
@@ -545,10 +577,6 @@ namespace Proyecto_Final
             float dotProduct = Vector2.Dot(vel, Vector2.Transform(new Vector2(1, 0), rotate));
 
             float dotProduct2 = Vector2.Dot(vel, Vector2.Transform(new Vector2(0, 1), rotate));
-
-            Console.WriteLine("" + dotProduct + " - " + dotProduct2);
-
-
 
             float max = dotProduct * 0.97f + accelerate;
 
