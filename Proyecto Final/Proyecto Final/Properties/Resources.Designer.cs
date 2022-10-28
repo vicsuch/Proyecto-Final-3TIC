@@ -103,6 +103,16 @@ namespace Proyecto_Final.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Free_play {
+            get {
+                object obj = ResourceManager.GetObject("Free play", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap lnvisble_maze {
             get {
                 object obj = ResourceManager.GetObject("lnvisble maze", resourceCulture);
@@ -126,6 +136,26 @@ namespace Proyecto_Final.Properties {
         internal static System.Drawing.Bitmap play {
             get {
                 object obj = ResourceManager.GetObject("play", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap wasd {
+            get {
+                object obj = ResourceManager.GetObject("wasd", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap win___1_ {
+            get {
+                object obj = ResourceManager.GetObject("win  (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -23,7 +23,7 @@ namespace Proyecto_Final
         string[] map;
         public float bSize = 100f;
         int[,] refInt;
-        public bool showEverything = false;
+        public bool showEverything = true;
         public bool win = false;
         Bitmap flecha;
 
@@ -109,6 +109,7 @@ namespace Proyecto_Final
             ArduinoPort.Open();
             ArduinoPort.Write("e");
             actualisador.Enabled = true;
+            
         }
         Car McQueen = new Car();
 
@@ -304,47 +305,59 @@ namespace Proyecto_Final
 
             
         }
-        int count = 0;
+
+
+
+
+        int contador = 0;
 
         private void Actualisador_Tick(object sender, EventArgs e)
         {
-            
-
             if (showEverything) { carShow(); }
 
             ControlUpdateMode();
 
             colisionDetection();
 
-            McQueen.update();
-
             serialComunication();
 
-            if (count == 5)
+            McQueen.update();
+
+            if (contador == 5)
             {
-                count = 0;
+                contador = 0;
                 ShowBrujula();
             }
-            count++;
+            contador++;
         }
-
+        
         public void serialComunication()
         {
             Quaternion rotate = Quaternion.CreateFromYawPitchRoll(0f, 0f, McQueen.rotation);
-            float minimo = 0.1f;
+            float minimoAdelante = 0f;
+            
             float vel = Vector2.Dot(McQueen.vel, Vector2.Transform(new Vector2(1, 0), rotate));
+
+
             Console.WriteLine("" + vel);
-            if (vel > minimo)
+            
+            if (vel > minimoAdelante)
             {
                 ArduinoPort.Write("w");
             }
-            
-            else if (vel < -minimo)
+            else if (vel < -minimoAdelante)
             {
                 ArduinoPort.Write("s");
             }
-
-            if(vel < minimo && vel > -minimo)
+            else if(McQueen.rotateVelocity > 0)
+            {
+                ArduinoPort.Write("a");
+            }
+            else if (McQueen.rotateVelocity < 0)
+            {
+                ArduinoPort.Write("d");
+            }
+            else
             {
                 ArduinoPort.Write("e");
             }
@@ -366,24 +379,33 @@ namespace Proyecto_Final
 
         public void ControlUpdateMode()
         {
-            float v = 0.1f;
-            float t = 0.4f;
+            float v = 0.05f;
+            float t = 1.5f;
 
             if (w)
             {
                 McQueen.accelerate += v;
             }
-            if (s)
+            else if (s)
             {
                 McQueen.accelerate -= v;
             }
-            if (a)
+            else if (a)
             {
-                McQueen.rotateVelocity -= t;
+                McQueen.rotateVelocity = -t;
             }
-            if (d)
+            else if (d)
             {
-                McQueen.rotateVelocity += t;
+                McQueen.rotateVelocity = t;
+            }
+            
+            if(w && s || !w && !s)
+            {
+                McQueen.accelerate = 0;
+            }
+            if(a && d || !a && !d)
+            {
+                McQueen.rotateVelocity = 0;
             }
         }
         
@@ -506,6 +528,7 @@ namespace Proyecto_Final
         {
             this.Hide();
             actualisador.Enabled = false;
+            ArduinoPort.Close();
         }
 
         private void PantallaDeJuego_Load(object sender, EventArgs e)
@@ -515,14 +538,14 @@ namespace Proyecto_Final
 
         private void PantallaDeJuego_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (ArduinoPort.IsOpen) ArduinoPort.Close();
+            if (ArduinoPort.IsOpen) { ArduinoPort.Close(); }
         }
     }
     public class Car
     {
         public int[] notMoveSides = new int[] { 0, 0 };
 
-        float updateTime = 5f/100f; //default time 100 ms
+        float updateTime = 0.5f; //default time 100 ms
 
         public Vector2 pos = new Vector2(0f, 0f);
         public Vector2 vel = new Vector2(0f, 0f);
@@ -578,53 +601,22 @@ namespace Proyecto_Final
 
             float dotProduct2 = Vector2.Dot(vel, Vector2.Transform(new Vector2(0, 1), rotate));
 
-            float max = dotProduct * 0.97f + accelerate;
-
-            accelerate = 0;
-
-            float maxSpeed = 1f;
-
-            if (max > maxSpeed)
-            {
-                max = maxSpeed;
-            }
-            else if (max < -maxSpeed)
-            {
-                max = -maxSpeed;
-            }
-
-
-            float maxTurn = 1f;
             
-            if (rotateVelocity > maxTurn)
-            {
-                rotateVelocity = maxTurn;
-            }
-            else if (rotateVelocity < -maxTurn)
-            {
-                rotateVelocity = -maxTurn;
-            }
-            rotateVelocity *= 0.9f;
 
-            vel = Vector2.Transform(new Vector2(max, dotProduct2 * 0.7f), rotate);
+            //accelerate = 0;
+
+
+
             //Console.WriteLine(vel);
 
-            if(notMoveSides[0] > 0 && vel.X > 0)
+            vel = Vector2.Transform(new Vector2(accelerate, 0), rotate);
+
+            if (Vector2.Dot(new Vector2(notMoveSides[0],notMoveSides[1]),vel) > 0f)
             {
-                vel.X = 0f;
+                vel = new Vector2(0, 0);
             }
-            if (notMoveSides[0] < 0 && vel.X < 0)
-            {
-                vel.X = 0f;
-            }
-            if (notMoveSides[1] > 0 && vel.Y > 0)
-            {
-                vel.Y = 0f;
-            }
-            if (notMoveSides[1] < 0 && vel.Y < 0)
-            {
-                vel.Y = 0f;
-            }
+            
+            
 
 
             pos += vel * updateTime;

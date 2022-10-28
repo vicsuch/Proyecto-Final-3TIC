@@ -51,7 +51,6 @@
             // 
             // actualisador
             // 
-            this.actualisador.Interval = 10;
             this.actualisador.Tick += new System.EventHandler(this.Actualisador_Tick);
             // 
             // label1

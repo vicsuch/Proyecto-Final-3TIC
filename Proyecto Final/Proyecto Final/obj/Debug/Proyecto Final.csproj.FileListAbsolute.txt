@@ -24,3 +24,4 @@ C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto F
 C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\obj\Debug\Proyecto_Final.PantallaDeInicio.resources
 C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\obj\Debug\Proyecto_Final.PantallaDeGanar.resources
 C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\obj\Debug\Proyecto_Final.PantallaDeOpciones.resources
+C:\Users\47701283\Documents\GitHub\Proyecto-Final-3TIC\Proyecto Final\Proyecto Final\obj\Debug\Proyecto_Final.PantallaModoLibre.resources

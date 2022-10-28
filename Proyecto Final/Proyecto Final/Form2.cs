@@ -25,10 +25,17 @@ namespace Proyecto_Final
 
             P2.ShowDialog();
 
-            if (P2.win)
+            try
             {
-                PantallaDeGanar P3 = new PantallaDeGanar();
-                P3.ShowDialog();
+                if (P2.win)
+                {
+                    PantallaDeGanar P3 = new PantallaDeGanar();
+                    P3.ShowDialog();
+                }
+            }
+            catch
+            {
+
             }
 
             this.Show();
@@ -38,6 +45,19 @@ namespace Proyecto_Final
         {
             PantallaDeOpciones P4 = new PantallaDeOpciones();
             P4.ShowDialog();
+            this.Show();
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void PictureBox3_Click(object sender, EventArgs e)
+        {
+            PantallaModoLibre P5 = new PantallaModoLibre();
+            this.Hide();
+            P5.ShowDialog();
             this.Show();
         }
     }
