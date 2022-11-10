@@ -23,7 +23,7 @@ namespace Proyecto_Final
         string[] map;
         public float bSize = 100f;
         int[,] refInt;
-        public bool showEverything = true;
+        public bool showEverything = false;
         public bool win = false;
         Bitmap flecha;
 
@@ -313,17 +313,17 @@ namespace Proyecto_Final
 
         private void Actualisador_Tick(object sender, EventArgs e)
         {
-            if (showEverything) { carShow(); }
+            if (showEverything) { carShow(); } // Muestra el mapa y el auto en la computadora para asegurarme que funcione bien
 
-            ControlUpdateMode();
+            ControlUpdateMode(); // Actualisa los controles de Movimiento
 
-            colisionDetection();
+            colisionDetection(); // Chequea si el auto esta chocandose
 
-            serialComunication();
+            serialComunication(); // Manda informacion al arduino sobre el movimiento
 
-            McQueen.update();
+            McQueen.update(); // Actualisa la posicion del auto
 
-            if (contador == 5)
+            if (contador == 4) // Cada 40 milisegundos actualisa la brujula
             {
                 contador = 0;
                 ShowBrujula();
